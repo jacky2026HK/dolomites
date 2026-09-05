@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sassolungo Route Map & Itinerary</title>
+  <title>Sassolungo & Pordoi Route Map & Itinerary</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -73,7 +73,7 @@
         </div>
         <div>
           <h1 class="text-base md:text-lg font-bold text-white leading-tight">Dolomites Trip Itinerary & Map</h1>
-          <p class="text-xs text-slate-400">Canazei Base & Sassolungo Region • Sep 24 – Oct 02</p>
+          <p class="text-xs text-slate-400">Canazei Base • Forcella Pordoi & Sassolungo Loop</p>
         </div>
       </div>
 
@@ -93,38 +93,23 @@
     <!-- Sidebar / Itinerary Panel -->
     <div id="schedulePanel" class="w-full md:w-[420px] lg:w-[460px] bg-slate-800/95 backdrop-blur border-r border-slate-700 flex flex-col h-full z-10 transition-all duration-300">
       
-      <!-- Option Selector Header (Shown for Sept 27) -->
-      <div id="optionSelectorHeader" class="p-3 md:p-4 border-b border-slate-700 bg-slate-800/80">
+      <!-- Option Selector Header (Shown for Sept 26 & Sept 27) -->
+      <div id="optionSelectorHeader" class="p-3 md:p-4 border-b border-slate-700 bg-slate-800/80 shrink-0">
         <div class="flex items-center justify-between mb-2">
-          <span class="text-xs font-semibold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
-            <i class="fa-solid fa-route"></i> Route Options (Sep 27)
+          <span id="routeTitleLabel" class="text-xs font-semibold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-route"></i> Route Options
           </span>
           <span id="routeDistanceBadge" class="text-xs px-2 py-0.5 rounded-full bg-sky-950 text-sky-300 border border-sky-800 font-medium">
-            17 km Loop
+            7.5 km Loop
           </span>
         </div>
         
-        <div class="grid grid-cols-4 gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60">
-          <button onclick="switchOption('A')" id="btnOptA" class="py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-sky-500 bg-sky-600 text-white shadow-sm">
-            <span class="font-bold">Opt A</span>
-            <span class="text-[10px] opacity-80">17km Outer</span>
-          </button>
-          <button onclick="switchOption('B')" id="btnOptB" class="py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-transparent text-slate-400 hover:text-white hover:bg-slate-800">
-            <span class="font-bold">Opt B</span>
-            <span class="text-[10px] opacity-80">8.5km Inner</span>
-          </button>
-          <button onclick="switchOption('C')" id="btnOptC" class="py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-transparent text-slate-400 hover:text-white hover:bg-slate-800">
-            <span class="font-bold">Opt C</span>
-            <span class="text-[10px] opacity-80">Lift + 17km</span>
-          </button>
-          <button onclick="switchOption('D')" id="btnOptD" class="py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-transparent text-slate-400 hover:text-white hover:bg-slate-800">
-            <span class="font-bold">Opt D</span>
-            <span class="text-[10px] opacity-80">Combo + 🍩</span>
-          </button>
+        <div id="optionsGrid" class="grid gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60">
+          <!-- Dynamic option buttons rendered via JS -->
         </div>
         
-        <p id="optionDescription" class="text-xs text-slate-300 mt-2.5 bg-slate-900/50 p-2.5 rounded-lg border border-slate-700/40">
-          Full 17 km perimeter hike starting from stay at Via Canazei 3 to Sella Pass, ending with a round-trip coffin cable car ride.
+        <p id="optionDescription" class="text-xs text-slate-300 mt-2.5 bg-slate-900/50 p-2.5 rounded-lg border border-slate-700/40 leading-relaxed">
+          Option description goes here...
         </p>
       </div>
 
@@ -147,9 +132,9 @@
     </div>
 
     <!-- Map Canvas Container -->
-    <div id="mapPanel" class="flex-1 h-full relative min-h-[300px]">
+    <div id="mapPanel" class="flex-1 h-full relative min-h-[300px] hidden md:block">
       
-      <!-- Leaflet Map Element with explicit absolute filling -->
+      <!-- Leaflet Map Element -->
       <div id="map" class="w-full h-full absolute inset-0 z-0"></div>
 
       <!-- Floating Map Layer Selector -->
@@ -166,7 +151,7 @@
       </div>
 
       <!-- Floating Map Legend -->
-      <div class="absolute bottom-16 md:bottom-6 left-4 z-[400] bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3 shadow-2xl max-w-xs text-xs">
+      <div class="absolute bottom-6 left-4 z-[400] bg-slate-900/90 backdrop-blur-md border border-slate-700/80 rounded-xl p-3 shadow-2xl max-w-xs text-xs">
         <div class="flex items-center justify-between mb-1.5 pb-1 border-b border-slate-700/60">
           <span class="font-semibold text-slate-200 flex items-center gap-1.5">
             <i class="fa-solid fa-layer-group text-sky-400"></i> Map Legend
@@ -182,35 +167,35 @@
           </div>
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-rose-600 border border-rose-300 inline-block shadow"></span>
-            <span>Doughnut Stop (Friedrich August)</span>
+            <span>Doughnut Stop / Summit Refuge</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-amber-500 border border-amber-300 inline-block shadow"></span>
-            <span>Coffin Cable Car Station</span>
+            <span>Cable Car Station</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-sky-500 border border-sky-300 inline-block shadow"></span>
-            <span>Refuge / Waypoint</span>
+            <span>Refuge / Trail Waypoint</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-emerald-600 border border-emerald-300 inline-block shadow"></span>
-            <span>Meetup Location</span>
+            <span class="w-3 h-3 rounded-full bg-teal-500 border border-teal-300 inline-block shadow"></span>
+            <span>Afternoon Play-by-Ear Spot</span>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Mobile View Switcher (Bottom Nav) -->
-    <div class="md:hidden flex bg-slate-800 border-t border-slate-700 z-30 shrink-0">
-      <button onclick="switchMobileView('schedule')" id="btnMobileSchedule" class="flex-1 py-3 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-list-check"></i> Schedule
-      </button>
-      <button onclick="switchMobileView('map')" id="btnMobileMap" class="flex-1 py-3 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-map-location-dot"></i> Map View
-      </button>
-    </div>
+  </div>
 
+  <!-- Mobile View Switcher (Bottom Nav) -->
+  <div class="md:hidden flex bg-slate-800 border-t border-slate-700 z-30 shrink-0">
+    <button onclick="switchMobileView('schedule')" id="btnMobileSchedule" class="flex-1 py-3 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-list-check"></i> Schedule
+    </button>
+    <button onclick="switchMobileView('map')" id="btnMobileMap" class="flex-1 py-3 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-map-location-dot"></i> Map View
+    </button>
   </div>
 
   <script>
@@ -218,7 +203,7 @@
     const tripDates = [
       { id: "2024-09-24", label: "Sep 24", day: "Tue", hasData: true },
       { id: "2024-09-25", label: "Sep 25", day: "Wed", hasData: false },
-      { id: "2024-09-26", label: "Sep 26", day: "Thu", hasData: false },
+      { id: "2024-09-26", label: "Sep 26 ★", day: "Thu", hasData: true, isMain: true },
       { id: "2024-09-27", label: "Sep 27 ★", day: "Fri", hasData: true, isMain: true },
       { id: "2024-09-28", label: "Sep 28", day: "Sat", hasData: false },
       { id: "2024-09-29", label: "Sep 29", day: "Sun", hasData: false },
@@ -227,8 +212,12 @@
       { id: "2024-10-02", label: "Oct 2", day: "Wed", hasData: false }
     ];
 
-    let currentDate = "2024-09-27";
-    let currentOption = "A";
+    let currentDate = "2024-09-26";
+    let currentOptionByDate = {
+      "2024-09-26": "A",
+      "2024-09-27": "A"
+    };
+
     let map = null;
     let markersGroup = null;
     let routePolyline = null;
@@ -243,10 +232,54 @@
       lat: 46.4764,
       lng: 11.7705,
       type: "stay",
-      desc: "Drive via road SS48/SS242. All routes begin and end here.",
+      desc: "Drive via mountain road SS48. All routes begin and end here.",
       icon: "fa-house-chimney",
-      sign: "Road SS48 / SS242"
+      sign: "Road SS48 -> Via Canazei 3"
     };
+
+    // Afternoon Play-by-Ear Ideas Data
+    const afternoonIdeasData = [
+      {
+        id: "qc_terme",
+        title: "🧘 QC Terme Thermal Spa",
+        lat: 46.4278,
+        lng: 11.6912,
+        driveTime: "15 min drive south",
+        badge: "Relaxation",
+        desc: "Luxury heated outdoor thermal pools facing mountain peaks, bio-saunas, and relaxation rooms in Pozza di Fassa.",
+        type: "afternoon"
+      },
+      {
+        id: "fedaia_marmolada",
+        title: "🚗 Lago di Fedaia & Marmolada",
+        lat: 46.4583,
+        lng: 11.8653,
+        driveTime: "20 min drive east",
+        badge: "Scenic Lake Drive",
+        desc: "Drive over the dam directly at the foot of Marmolada Glacier (3,343m). Great lakeside coffee & reflections.",
+        type: "afternoon"
+      },
+      {
+        id: "passo_gardena",
+        title: "⛰️ Passo Gardena Scenic Loop",
+        lat: 46.5497,
+        lng: 11.8086,
+        driveTime: "35 min drive loop",
+        badge: "Panoramic Drive",
+        desc: "Drive the famous mountain pass loop around the Sella Group past Cir peaks down into Val Gardena.",
+        type: "afternoon"
+      },
+      {
+        id: "canazei_aperitivo",
+        title: "🍹 Canazei River Walk & Aperitivo",
+        lat: 46.4764,
+        lng: 11.7705,
+        driveTime: "0 min (Town Center)",
+        badge: "Casual Town Stroll",
+        desc: "Walk along Avisio river and grab an outdoor Aperol Spritz or Hugo with local speck & cheese in Canazei town.",
+        type: "afternoon"
+      }
+    ];
 
     // Sep 24 Travel & Meetup Schedule
     const day24Schedule = [
@@ -296,33 +329,94 @@
       }
     ];
 
-    // Sep 27 Route Options with exact Trail Numbers & Physical Signposts
-    const optionsData = {
+    // Sep 26 Options: Forcella Pordoi & Piz Boè
+    const pordoiOptionsData = {
+      "A": {
+        distance: "7.5 km Loop",
+        btnLabel: "Opt A",
+        subLabel: "Hike Up / Lift Down",
+        title: "Option A: Hike UP & Cable Car DOWN (Knee-Saver)",
+        desc: "Hike up steep scree switchbacks (Trail 627) to Forcella Pordoi, climb to Piz Boè summit (3,152m), traverse to top station, and ride cable car down directly to your parked car.",
+        schedule: [
+          { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive east on SS48 switchbacks up to Passo Pordoi (~15-20 mins)." },
+          { num: 1, time: "08:50 AM", title: "Passo Pordoi Parking & Trailhead", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Park in the paved lot near cable car base. Locate trailhead behind chapel.", icon: "fa-square-p-parking", sign: "[627] Forcella Pordoi / Rif. Boè" },
+          { num: 2, time: "09:15 AM", title: "Scree Gully Switchbacks (Trail 627)", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Climb steep, continuous loose gravel switchbacks winding up the narrow rock canyon.", icon: "fa-person-hiking", sign: "[627] Forcella Pordoi" },
+          { num: 3, time: "10:15 AM", title: "Rifugio Forcella Pordoi (2,848m)", lat: 46.4988, lng: 11.8102, type: "hut", desc: "Reach notch gorge between rock walls. Espresso break at the hut.", icon: "fa-mug-hot", sign: "[638] Piz Boè / Capanna Fassa" },
+          { num: 4, time: "11:30 AM", title: "Piz Boè Summit & Capanna Fassa (3,152m)", lat: 46.5088, lng: 11.8217, type: "doughnut", desc: "Scramble up Trail 638 to highest peak in Sella Group. Alpine summit lunch with 360° views.", icon: "fa-utensils", sign: "[638] Capanna Piz Fassa" },
+          { num: 5, time: "12:45 PM", title: "Sass Pordoi Top Station (2,950m)", lat: 46.4965, lng: 11.8042, type: "coffin", desc: "Traverse lunar plateau on Trail 627A to top cable station ('Terrace of Dolomites').", icon: "fa-mountain-sun", sign: "[627A] Cable Car / Funivia Sass Pordoi" },
+          { num: 6, time: "01:15 PM", title: "Funivia Sass Pordoi Downhill Ride", lat: 46.4878, lng: 11.8123, type: "coffin", desc: "Buy one-way downhill ticket (~€18) and take 4-minute cable car ride directly back to car.", icon: "fa-cable-car", sign: "Funivia Sass Pordoi (Downhill Ticket)" },
+          { ...ACCOMMODATION, num: 7, time: "01:45 PM", title: "Return to Accommodation Base", desc: "Drive SS48 downhill back to Via Canazei 3 for evening relaxation or afternoon options." }
+        ]
+      },
+      "B": {
+        distance: "7.0 km Loop",
+        btnLabel: "Opt B",
+        subLabel: "Lift Up / Hike Down",
+        title: "Option B: Cable Car UP & Hike DOWN",
+        desc: "Ride Funivia Sass Pordoi cable car up to 2,950m plateau, scramble up Trail 638 to Piz Boè summit (3,152m), and descend on foot down Trail 627 scree switchbacks back to Passo Pordoi.",
+        schedule: [
+          { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive east on SS48 switchbacks up to Passo Pordoi." },
+          { num: 1, time: "08:50 AM", title: "Passo Pordoi Cable Car Base", lat: 46.4878, lng: 11.8123, type: "coffin", desc: "Park in lot and purchase one-way uphill ticket for Funivia Sass Pordoi.", icon: "fa-square-p-parking", sign: "Funivia Sass Pordoi (Uphill Ticket)" },
+          { num: 2, time: "09:15 AM", title: "Sass Pordoi Top Station (2,950m)", lat: 46.4965, lng: 11.8042, type: "coffin", desc: "Arrive at top plateau ('Terrace of the Dolomites'). Follow path 627A downhill towards Forcella.", icon: "fa-cable-car", sign: "[627A] Forcella Pordoi" },
+          { num: 3, time: "09:40 AM", title: "Rifugio Forcella Pordoi (2,848m)", lat: 46.4988, lng: 11.8102, type: "hut", desc: "Cross notch pass and begin ascending Trail 638 towards Piz Boè summit.", icon: "fa-person-hiking", sign: "[638] Piz Boè / Capanna Fassa" },
+          { num: 4, time: "11:00 AM", title: "Piz Boè Summit & Capanna Fassa (3,152m)", lat: 46.5088, lng: 11.8217, type: "doughnut", desc: "Summit climb and alpine lunch break surrounded by vertical rock towers.", icon: "fa-utensils", sign: "[638] Capanna Piz Fassa" },
+          { num: 5, time: "12:30 PM", title: "Descend Scree Gully Switchbacks (Trail 627)", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Hike down scree switchbacks from Rifugio Forcella Pordoi back towards Pordoi Pass.", icon: "fa-person-hiking", sign: "[627] Passo Pordoi" },
+          { num: 6, time: "02:00 PM", title: "Passo Pordoi Parking", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Reach bottom parking lot at Pordoi Pass.", icon: "fa-square-p-parking", sign: "Trailhead Passo Pordoi" },
+          { ...ACCOMMODATION, num: 7, time: "02:20 PM", title: "Return to Accommodation Base", desc: "Drive SS48 back down to Via Canazei 3." }
+        ]
+      },
+      "C": {
+        distance: "9.5 km Loop",
+        btnLabel: "Opt C",
+        subLabel: "Full Hike Up & Down",
+        title: "Option C: Full Hike UP & DOWN (100% On Foot)",
+        desc: "100% physical hike on foot without cable car. Ascend Trail 627 scree switchbacks to Piz Boè summit (3,152m) and descend the full scree couloir back to Passo Pordoi.",
+        schedule: [
+          { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive SS48 up to Passo Pordoi." },
+          { num: 1, time: "08:50 AM", title: "Passo Pordoi Trailhead", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Park at Passo Pordoi lot and locate Trail 627 trailhead.", icon: "fa-square-p-parking", sign: "[627] Forcella Pordoi / Rif. Boè" },
+          { num: 2, time: "09:15 AM", title: "Scree Gully Climb (Trail 627)", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Steep ascent up continuous switchbacks inside the narrow rock canyon.", icon: "fa-person-hiking", sign: "[627] Forcella Pordoi" },
+          { num: 3, time: "10:30 AM", title: "Rifugio Forcella Pordoi (2,848m)", lat: 46.4988, lng: 11.8102, type: "hut", desc: "Reach notch gap for a brief rest before summit push.", icon: "fa-mug-hot", sign: "[638] Piz Boè" },
+          { num: 4, time: "11:45 AM", title: "Piz Boè Summit & Capanna Fassa (3,152m)", lat: 46.5088, lng: 11.8217, type: "doughnut", desc: "Summit accomplishment at 3,152m elevation! Summit refuge lunch.", icon: "fa-utensils", sign: "[638] Capanna Piz Fassa" },
+          { num: 5, time: "01:00 PM", title: "Rifugio Boè Junction", lat: 46.5080, lng: 11.8120, type: "hut", desc: "Descend north on Trail 638 towards Rifugio Boè and loop back west across plateau.", icon: "fa-mountain-sun", sign: "[627] Forcella Pordoi / Passo Pordoi" },
+          { num: 6, time: "02:00 PM", title: "Descend Scree Gully to Pordoi Pass", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Hike down scree switchbacks on Trail 627 back to Passo Pordoi parking.", icon: "fa-person-hiking", sign: "[627] Passo Pordoi" },
+          { ...ACCOMMODATION, num: 7, time: "03:00 PM", title: "Return to Accommodation Base", desc: "Drive SS48 back down to Via Canazei 3." }
+        ]
+      }
+    };
+
+    // Sep 27 Options: Sassolungo Loop
+    const sassolungoOptionsData = {
       "A": {
         distance: "17 km Loop",
+        btnLabel: "Opt A",
+        subLabel: "17km Outer",
+        title: "Option A: 17km Outer Perimeter Loop",
         desc: "Full 17 km perimeter hike around Sassolungo starting from stay (Via Canazei 3) via Sella Pass (Trail 557 -> 527 -> 526), ending with a round-trip ride on the coffin cable car.",
         schedule: [
           { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart accommodation base by car and drive up pass road SS48 -> SS242 towards Passo Sella." },
-          { num: 1, time: "07:15 AM", title: "Sella Pass Parking & Trailhead", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park in paid lot at Sella Pass. Locate wooden trail signpost '557 Friedrich August Weg' behind the resort chapel.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg / Rif. Friedrich August" },
-          { num: 2, time: "08:00 AM", title: "Rifugio Friedrich August (Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Breakfast stop! Follow Trail 557 West. Enjoy warm cream-filled krapfen with espresso straight from the oven.", icon: "fa-mug-hot", sign: "[557] Rif. Pertini / Rif. Sasso Piatto" },
-          { num: 3, time: "09:15 AM", title: "Rifugio Sandro Pertini", lat: 46.5015, lng: 11.7225, type: "hut", desc: "Continue West along high balcony Trail 557 with panoramic views of Val di Fassa and Marmolada on your left.", icon: "fa-person-hiking", sign: "[557] Rif. Sasso Piatto (Plattkofelhütte)" },
-          { num: 4, time: "11:30 AM", title: "Rifugio Sasso Piatto (Lunch)", lat: 46.5012, lng: 11.7058, type: "hut", desc: "Western tip milestone. At the hut, turn RIGHT onto Trail 527 towards Rifugio Vicenza. Alpine lunch stop.", icon: "fa-utensils", sign: "[527] Rif. Vicenza / Langkofelhütte" },
-          { num: 5, time: "01:30 PM", title: "Rifugio Vicenza (Langkofelhütte)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Follow Trail 527 North then turn right onto Trail 525 up into the dramatic north-side amphitheater canyon.", icon: "fa-mountain-sun", sign: "[525] Rif. Vicenza -> [526] Rif. Comici" },
-          { num: 6, time: "02:30 PM", title: "Rifugio Comici", lat: 46.5298, lng: 11.7610, type: "hut", desc: "Descend 525 to junction, turn right onto Trail 526 East around the north face cliffs to Rifugio Comici.", icon: "fa-store", sign: "[526] Rif. Comici / Passo Sella" },
+          { num: 1, time: "07:15 AM", title: "Sella Pass Parking & Trailhead", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park in paid lot at Sella Pass. Locate wooden trail signpost '557 Friedrich August Weg' behind chapel.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg / Rif. Friedrich August" },
+          { num: 2, time: "08:00 AM", title: "Rifugio Friedrich August (Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Breakfast stop! Follow Trail 557 West. Enjoy warm cream-filled krapfen with espresso straight from oven.", icon: "fa-mug-hot", sign: "[557] Rif. Pertini / Rif. Sasso Piatto" },
+          { num: 3, time: "09:15 AM", title: "Rifugio Sandro Pertini", lat: 46.5015, lng: 11.7225, type: "hut", desc: "Continue West along high balcony Trail 557 with panoramic views of Val di Fassa on your left.", icon: "fa-person-hiking", sign: "[557] Rif. Sasso Piatto (Plattkofelhütte)" },
+          { num: 4, time: "11:30 AM", title: "Rifugio Sasso Piatto (Lunch)", lat: 46.5012, lng: 11.7058, type: "hut", desc: "Western tip milestone. At hut, turn RIGHT onto Trail 527 towards Rifugio Vicenza. Alpine lunch stop.", icon: "fa-utensils", sign: "[527] Rif. Vicenza / Langkofelhütte" },
+          { num: 5, time: "01:30 PM", title: "Rifugio Vicenza (Langkofelhütte)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Follow Trail 527 North then turn right onto Trail 525 up into dramatic canyon basin.", icon: "fa-mountain-sun", sign: "[525] Rif. Vicenza -> [526] Rif. Comici" },
+          { num: 6, time: "02:30 PM", title: "Rifugio Comici", lat: 46.5298, lng: 11.7610, type: "hut", desc: "Descend 525 to junction, turn right onto Trail 526 East around north face cliffs to Rifugio Comici.", icon: "fa-store", sign: "[526] Rif. Comici / Passo Sella" },
           { num: 7, time: "03:00 PM", title: "Città dei Sassi (Stone City)", lat: 46.5125, lng: 11.7588, type: "hut", desc: "Follow Trail 526 South weaving through giant ancient boulder fields back towards Sella Pass.", icon: "fa-cubes-stacked", sign: "[526] Città dei Sassi / Passo Sella" },
-          { num: 8, time: "03:30 PM", title: "Coffin Cable Car Excursion", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Ride standing 2-person gondola (Cabinovia Sassolungo) up to Rifugio Toni Demetz (2,685m) at the notch and back down.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo / Gondelbahn'" },
+          { num: 8, time: "03:30 PM", title: "Coffin Cable Car Excursion", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Ride standing 2-person gondola (Cabinovia Sassolungo) up to Rifugio Toni Demetz (2,685m) and back down.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo / Gondelbahn'" },
           { ...ACCOMMODATION, num: 9, time: "04:30 PM", title: "Return to Accommodation Base", desc: "Drive SS242 -> SS48 back down to Via Canazei 3 for evening relaxation." }
         ]
       },
       "B": {
         distance: "8.5 km Inner",
-        desc: "Shorter 8.5 km circuit using Trail 557 for doughnuts, then taking the coffin cable car up to 2,685m and descending through the inner canyon on Trail 525.",
+        btnLabel: "Opt B",
+        subLabel: "8.5km Inner",
+        title: "Option B: 8.5km Inner Canyon Circuit",
+        desc: "Shorter 8.5 km circuit using Trail 557 for doughnuts, then taking coffin cable car up to 2,685m and descending through inner canyon on Trail 525.",
         schedule: [
           { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart Via Canazei 3 and drive up road SS242 to Sella Pass." },
           { num: 1, time: "07:15 AM", title: "Sella Pass Trailhead", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park at Sella Pass trailhead.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg" },
           { num: 2, time: "08:00 AM", title: "Rifugio Friedrich August (Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Follow Trail 557 West for 20 mins for morning krapfen doughnut stop and coffee.", icon: "fa-mug-hot", sign: "[557] Rif. Friedrich August" },
           { num: 3, time: "09:15 AM", title: "Coffin Cable Car Base Station", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Walk 20 mins back East on Trail 557 to Sella Pass and board standing coffin gondola.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo'" },
-          { num: 4, time: "09:45 AM", title: "Rifugio Toni Demetz (Gap Notch 2,685m)", lat: 46.5165, lng: 11.7410, type: "coffin", desc: "Arrive at top station. Look for Trail Sign 525. Begin steep scree descent down Trail 525 into Langkofelkar gorge.", icon: "fa-person-hiking", sign: "[525] Rif. Vicenza / Langkofelhütte" },
+          { num: 4, time: "09:45 AM", title: "Rifugio Toni Demetz (Gap Notch 2,685m)", lat: 46.5165, lng: 11.7410, type: "coffin", desc: "Arrive at top station. Look for Trail Sign 525. Begin steep scree descent down Trail 525 into gorge.", icon: "fa-person-hiking", sign: "[525] Rif. Vicenza / Langkofelhütte" },
           { num: 5, time: "11:15 AM", title: "Rifugio Vicenza (Lunch)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Reach inner basin at bottom of Trail 525. Alpine lunch break surrounded by vertical rock walls.", icon: "fa-utensils", sign: "[526] Rif. Comici / Passo Sella" },
           { num: 6, time: "01:15 PM", title: "Rifugio Comici & Stone City", lat: 46.5298, lng: 11.7610, type: "hut", desc: "Take Trail 526 East through northern face boulder fields and Città dei Sassi back to Sella Pass.", icon: "fa-cubes-stacked", sign: "[526] Città dei Sassi / Passo Sella" },
           { ...ACCOMMODATION, num: 7, time: "02:30 PM", title: "Return to Accommodation Base", desc: "Drive road SS242 -> SS48 back to Via Canazei 3." }
@@ -330,6 +424,9 @@
       },
       "C": {
         distance: "Lift + 17km",
+        btnLabel: "Opt C",
+        subLabel: "Lift + 17km",
+        title: "Option C: Cable Car Access Outer Circuit",
         desc: "Uses Col Rodella Cable Car from Campitello, joins Trail 557 for doughnuts, completes full outer circuit (557 -> 527 -> 526), and includes coffin lift.",
         schedule: [
           { ...ACCOMMODATION, time: "07:45 AM", desc: "Depart Via Canazei 3 for 10-min drive down SS48 to Campitello cable car station." },
@@ -346,11 +443,14 @@
       },
       "D": {
         distance: "19.5 km Combo",
+        btnLabel: "Opt D",
+        subLabel: "Combo + 🍩",
+        title: "Option D: Grand Combo (Outer + Inner + Coffin Lift)",
         desc: "Grand Inner & Outer Combo: Start on Trail 557 for fresh doughnuts, take coffin lift up to 2,685m, descend inner canyon (Trail 525), and loop outer perimeter (Trail 527 -> 557 -> 526).",
         schedule: [
           { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart accommodation base (Via Canazei 3) and drive road SS242 to Sella Pass." },
           { num: 1, time: "07:15 AM", title: "Sella Pass Trailhead & Parking", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park in paid lot at Sella Pass. Locate trailhead sign '557 Friedrich August Weg'.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg" },
-          { num: 2, time: "07:45 AM", title: "Rifugio Friedrich August (Fresh Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Walk 20 mins West on Trail 557. Enjoy warm cream-filled krapfen with espresso straight from the oven.", icon: "fa-mug-hot", sign: "[557] Rif. Friedrich August" },
+          { num: 2, time: "07:45 AM", title: "Rifugio Friedrich August (Fresh Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Walk 20 mins West on Trail 557. Enjoy warm cream-filled krapfen with espresso straight from oven.", icon: "fa-mug-hot", sign: "[557] Rif. Friedrich August" },
           { num: 3, time: "08:45 AM", title: "Coffin Cable Car Base Station", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Walk 20 mins back East on Trail 557 to Sella Pass and board standing 2-person coffin gondola.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo'" },
           { num: 4, time: "09:15 AM", title: "Rifugio Toni Demetz (2,685m Gap)", lat: 46.5165, lng: 11.7410, type: "coffin", desc: "High notch pass between peaks. Locate Trail Sign 525 and begin steep scree descent into inner gorge.", icon: "fa-person-hiking", sign: "[525] Rif. Vicenza / Langkofelhütte" },
           { num: 5, time: "10:45 AM", title: "Rifugio Vicenza (Langkofelhütte)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Reach inner basin. Exit gorge onto Trail 527 West/South towards Rifugio Sasso Piatto.", icon: "fa-mountain-sun", sign: "[527] Rif. Sasso Piatto (Plattkofelhütte)" },
@@ -396,20 +496,49 @@
     }
 
     function switchOption(optKey) {
-      currentOption = optKey;
-      
-      ["A", "B", "C", "D"].forEach(k => {
-        const btn = document.getElementById(`btnOpt${k}`);
-        if (btn) {
-          if (k === optKey) {
-            btn.className = "py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-sky-500 bg-sky-600 text-white shadow-sm";
-          } else {
-            btn.className = "py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-transparent text-slate-400 hover:text-white hover:bg-slate-800";
-          }
-        }
-      });
-
+      currentOptionByDate[currentDate] = optKey;
+      renderOptionButtons();
       renderActiveView();
+    }
+
+    function renderOptionButtons() {
+      const grid = document.getElementById("optionsGrid");
+      const titleLabel = document.getElementById("routeTitleLabel");
+      let data = null;
+
+      if (currentDate === "2024-09-26") {
+        data = pordoiOptionsData;
+        titleLabel.innerHTML = `<i class="fa-solid fa-route"></i> Forcella Pordoi Options (Sep 26)`;
+      } else if (currentDate === "2024-09-27") {
+        data = sassolungoOptionsData;
+        titleLabel.innerHTML = `<i class="fa-solid fa-route"></i> Sassolungo Loop Options (Sep 27)`;
+      } else {
+        return;
+      }
+
+      const optKeys = Object.keys(data);
+      const activeOpt = currentOptionByDate[currentDate] || optKeys[0];
+
+      grid.style.gridTemplateColumns = `repeat(${optKeys.length}, minmax(0, 1fr))`;
+
+      grid.innerHTML = optKeys.map(k => {
+        const item = data[k];
+        const isActive = k === activeOpt;
+        const btnClass = isActive 
+          ? "py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-sky-500 bg-sky-600 text-white shadow-sm"
+          : "py-2 px-1 text-xs font-medium rounded-lg transition-all text-center flex flex-col items-center justify-center gap-0.5 border border-transparent text-slate-400 hover:text-white hover:bg-slate-800";
+        
+        return `
+          <button onclick="switchOption('${k}')" class="${btnClass}">
+            <span class="font-bold">${item.btnLabel}</span>
+            <span class="text-[10px] opacity-80 leading-tight text-center">${item.subLabel}</span>
+          </button>
+        `;
+      }).join("");
+
+      const currentData = data[activeOpt];
+      document.getElementById("routeDistanceBadge").textContent = currentData.distance;
+      document.getElementById("optionDescription").textContent = currentData.desc;
     }
 
     function initMap() {
@@ -420,7 +549,6 @@
 
       L.control.zoom({ position: 'topright' }).addTo(map);
 
-      // High-reliability tile providers including Google Maps Terrain & Satellite
       tileLayers = {
         googleTerrain: L.tileLayer('https://mt{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
           maxZoom: 20,
@@ -434,17 +562,15 @@
         }),
         osm: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          attribution: '&copy; OpenStreetMap'
         })
       };
 
-      // Default layer: Google Terrain (ideal for mountain relief)
       currentTileLayer = tileLayers.googleTerrain;
       currentTileLayer.addTo(map);
 
       markersGroup = L.layerGroup().addTo(map);
 
-      // Auto-resize observer ensures map tiles fit perfectly on any container resize
       const resizeObserver = new ResizeObserver(() => {
         if (map) map.invalidateSize();
       });
@@ -488,23 +614,23 @@
       const timelineContainer = document.getElementById("timelineContainer");
       const optionHeader = document.getElementById("optionSelectorHeader");
 
-      if (currentDate === "2024-09-27") {
-        // Sep 27 Main Sassolungo Hike
+      if (currentDate === "2024-09-26") {
         optionHeader.classList.remove("hidden");
-        
-        const currentData = optionsData[currentOption];
-        document.getElementById("routeDistanceBadge").textContent = currentData.distance;
-        document.getElementById("optionDescription").textContent = currentData.desc;
+        renderOptionButtons();
+        const activeOpt = currentOptionByDate["2024-09-26"] || "A";
+        renderScheduleAndMap(pordoiOptionsData[activeOpt].schedule, true);
 
-        renderScheduleAndMap(currentData.schedule);
+      } else if (currentDate === "2024-09-27") {
+        optionHeader.classList.remove("hidden");
+        renderOptionButtons();
+        const activeOpt = currentOptionByDate["2024-09-27"] || "A";
+        renderScheduleAndMap(sassolungoOptionsData[activeOpt].schedule, true);
 
       } else if (currentDate === "2024-09-24") {
-        // Sep 24 Meetup
         optionHeader.classList.add("hidden");
-        renderScheduleAndMap(day24Schedule);
+        renderScheduleAndMap(day24Schedule, false);
 
       } else {
-        // Empty Shell Days
         optionHeader.classList.add("hidden");
         const dateObj = tripDates.find(d => d.id === currentDate);
         
@@ -517,15 +643,19 @@
               <h3 class="text-base font-semibold text-slate-200">No schedule planned for ${dateObj.label} (${dateObj.day}) yet</h3>
               <p class="text-xs text-slate-400 mt-1">This date is currently an open itinerary shell ready for your custom activities.</p>
             </div>
-            <button onclick="changeDate('2024-09-27')" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all inline-flex items-center gap-2">
-              <i class="fa-solid fa-mountain"></i> Switch to Sassolungo Hike (Sep 27)
-            </button>
+            <div class="flex items-center justify-center gap-2 pt-2">
+              <button onclick="changeDate('2024-09-26')" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-mountain"></i> Forcella Pordoi (Sep 26)
+              </button>
+              <button onclick="changeDate('2024-09-27')" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-mountain"></i> Sassolungo (Sep 27)
+              </button>
+            </div>
           </div>
         `;
 
-        // Focus map back to base
         map.setView([46.4764, 11.7705], 11);
-        const baseMarker = L.marker([46.4764, 11.7705], {
+        L.marker([46.4764, 11.7705], {
           icon: createCustomIcon("0", "stay")
         }).bindPopup("<div class='p-1'><b class='text-sm text-slate-900'>Accommodation Base</b><br><span class='text-xs text-slate-600'>Via Canazei 3</span></div>").addTo(markersGroup);
       }
@@ -535,12 +665,11 @@
       }, 100);
     }
 
-    function renderScheduleAndMap(scheduleItems) {
+    function renderScheduleAndMap(scheduleItems, showAfternoonModule = false) {
       const timelineContainer = document.getElementById("timelineContainer");
       const latLngs = [];
 
-      // Render Schedule Cards
-      timelineContainer.innerHTML = scheduleItems.map(item => {
+      let htmlContent = scheduleItems.map(item => {
         const typeBg = item.type === 'stay' ? 'bg-purple-500/10 border-purple-500/30 text-purple-300' :
                        item.type === 'doughnut' ? 'bg-rose-500/10 border-rose-500/30 text-rose-300' :
                        item.type === 'coffin' ? 'bg-amber-500/10 border-amber-500/30 text-amber-300' :
@@ -578,7 +707,7 @@
         `;
       }).join("");
 
-      // Plot Map Markers & Collect Points
+      // Render Morning Hike Map Points
       scheduleItems.forEach(item => {
         if (item.lat && item.lng) {
           latLngs.push([item.lat, item.lng]);
@@ -604,7 +733,53 @@
         }
       });
 
-      // Draw Route Polyline
+      // Append Afternoon Play-by-Ear Ideas Section if applicable
+      if (showAfternoonModule) {
+        htmlContent += `
+          <div class="mt-6 pt-4 border-t border-slate-700/80">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-compass"></i> Afternoon Ideas (Play by Ear)
+              </h3>
+              <span class="text-[10px] bg-teal-950 text-teal-300 border border-teal-800 px-2 py-0.5 rounded-full font-medium">Post-Hike</span>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">Optional ideas after completing your hike. Tap any option below to highlight it on the map:</p>
+            
+            <div class="space-y-2">
+              ${afternoonIdeasData.map(idea => `
+                <div onclick="focusWaypoint(${idea.lat}, ${idea.lng})" class="bg-teal-950/20 hover:bg-teal-950/40 border border-teal-800/40 hover:border-teal-500/60 rounded-xl p-3 transition-all cursor-pointer group">
+                  <div class="flex items-center justify-between gap-2">
+                    <h4 class="text-xs font-bold text-slate-100 group-hover:text-teal-300 transition-colors">${idea.title}</h4>
+                    <span class="text-[10px] font-semibold bg-teal-500/20 text-teal-300 px-2 py-0.5 rounded border border-teal-500/30 shrink-0">
+                      ${idea.driveTime}
+                    </span>
+                  </div>
+                  <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">${idea.desc}</p>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+
+        // Add Afternoon Markers onto Map
+        afternoonIdeasData.forEach(idea => {
+          const afternoonMarker = L.marker([idea.lat, idea.lng], {
+            icon: createCustomIcon("★", "afternoon")
+          }).addTo(markersGroup);
+
+          afternoonMarker.bindPopup(`
+            <div class="p-1 max-w-xs">
+              <span class="px-1.5 py-0.5 bg-teal-950 border border-teal-700 text-teal-300 font-bold rounded text-[10px] uppercase tracking-wider">Afternoon Option</span>
+              <h3 class="font-bold text-white text-sm mt-1 leading-snug">${idea.title}</h3>
+              <p class="text-xs text-teal-300 font-medium mt-0.5"><i class="fa-solid fa-car"></i> ${idea.driveTime}</p>
+              <p class="text-xs text-slate-300 mt-1.5">${idea.desc}</p>
+            </div>
+          `);
+        });
+      }
+
+      timelineContainer.innerHTML = htmlContent;
+
       if (latLngs.length > 1) {
         routePolyline = L.polyline(latLngs, {
           color: '#38bdf8',
@@ -626,6 +801,7 @@
       if (type === 'doughnut') colorClass = 'bg-rose-600 border-rose-300';
       if (type === 'coffin') colorClass = 'bg-amber-500 border-amber-300';
       if (type === 'meetup') colorClass = 'bg-emerald-600 border-emerald-300';
+      if (type === 'afternoon') colorClass = 'bg-teal-500 border-teal-300';
 
       return L.divIcon({
         className: 'custom-leaflet-marker',
@@ -636,18 +812,19 @@
 
     function focusWaypoint(lat, lng) {
       if (map && lat && lng) {
-        map.flyTo([lat, lng], 14, { duration: 1.0 });
-        
-        markersGroup.eachLayer(layer => {
-          const latLng = layer.getLatLng();
-          if (Math.abs(latLng.lat - lat) < 0.0001 && Math.abs(latLng.lng - lng) < 0.0001) {
-            layer.openPopup();
-          }
-        });
-
         if (window.innerWidth < 768) {
           switchMobileView('map');
         }
+
+        setTimeout(() => {
+          map.flyTo([lat, lng], 13, { duration: 1.0 });
+          markersGroup.eachLayer(layer => {
+            const latLng = layer.getLatLng();
+            if (Math.abs(latLng.lat - lat) < 0.0001 && Math.abs(latLng.lng - lng) < 0.0001) {
+              layer.openPopup();
+            }
+          });
+        }, 200);
       }
     }
 
