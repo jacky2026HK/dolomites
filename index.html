@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dolomites Itinerary</title>
+  <title>Sassolungo & Pordoi Route Map & Itinerary</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -73,7 +73,7 @@
         </div>
         <div>
           <h1 class="text-base md:text-lg font-bold text-white leading-tight">Dolomites Trip Itinerary & Map</h1>
-          <p class="text-xs text-slate-400">Canazei Base • Sassolungo, Pordoi & Seceda</p>
+          <p class="text-xs text-slate-400">Canazei Base • Forcella Pordoi & Sassolungo Loop</p>
         </div>
       </div>
 
@@ -93,20 +93,15 @@
     <!-- Sidebar / Itinerary Panel -->
     <div id="schedulePanel" class="w-full md:w-[420px] lg:w-[460px] bg-slate-800/95 backdrop-blur border-r border-slate-700 flex flex-col h-full z-10 transition-all duration-300">
       
-      <!-- Option Selector Header (Shown for Sept 26, 27, 29) -->
+      <!-- Option Selector Header (Shown for Sept 26 & Sept 27) -->
       <div id="optionSelectorHeader" class="p-3 md:p-4 border-b border-slate-700 bg-slate-800/80 shrink-0">
         <div class="flex items-center justify-between mb-2">
           <span id="routeTitleLabel" class="text-xs font-semibold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
             <i class="fa-solid fa-route"></i> Route Options
           </span>
-          <div class="flex items-center gap-1.5">
-            <button onclick="openRefModal()" id="btnDayRef" class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-950 hover:bg-indigo-900 text-indigo-300 border border-indigo-600/80 font-bold flex items-center gap-1 transition-all shadow-sm">
-              <i class="fa-solid fa-bookmark text-[10px]"></i> REF
-            </button>
-            <span id="routeDistanceBadge" class="text-xs px-2 py-0.5 rounded-full bg-sky-950 text-sky-300 border border-sky-800 font-medium">
-              17 km Loop
-            </span>
-          </div>
+          <span id="routeDistanceBadge" class="text-xs px-2 py-0.5 rounded-full bg-sky-950 text-sky-300 border border-sky-800 font-medium">
+            7.5 km Loop
+          </span>
         </div>
         
         <div id="optionsGrid" class="grid gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60">
@@ -172,7 +167,7 @@
           </div>
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-rose-600 border border-rose-300 inline-block shadow"></span>
-            <span>Doughnut Stop / Summit Viewpoint</span>
+            <span>Doughnut Stop / Summit Refuge</span>
           </div>
           <div class="flex items-center gap-2">
             <span class="w-3 h-3 rounded-full bg-amber-500 border border-amber-300 inline-block shadow"></span>
@@ -203,100 +198,7 @@
     </button>
   </div>
 
-  <!-- Reference Links & Blogs Modal -->
-  <div id="refModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-[1000] hidden flex items-center justify-center p-4 transition-all">
-    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden flex flex-col max-h-[85vh]">
-      <div class="p-4 bg-slate-800 border-b border-slate-700 flex items-center justify-between shrink-0">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 font-bold">
-            <i class="fa-solid fa-bookmark text-sm"></i>
-          </div>
-          <div>
-            <h3 id="modalRefTitle" class="text-sm font-bold text-white leading-tight">References & External Links</h3>
-            <p id="modalRefSubtitle" class="text-[11px] text-slate-400">Official Guides, Lift Rates & Blogs</p>
-          </div>
-        </div>
-        <button onclick="closeRefModal()" class="w-8 h-8 rounded-lg bg-slate-700/60 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div id="modalRefList" class="p-4 overflow-y-auto space-y-2.5 flex-1">
-        <!-- Rendered dynamically via JS -->
-      </div>
-      <div class="p-3 bg-slate-800/90 border-t border-slate-700 text-right shrink-0">
-        <button onclick="closeRefModal()" class="px-4 py-1.5 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold transition-all">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-
   <script>
-    const dayReferences = {
-      "2024-09-29": [
-        {
-          title: "Seceda Cable Car Official Operating Hours & Rates",
-          type: "Official Cable Car Site",
-          domain: "seceda.it",
-          url: "https://www.seceda.it/en/cable-cars",
-          desc: "Official timetable, ticket prices, and operating status for Ortisei - Furnes - Seceda cable car."
-        },
-        {
-          title: "Col Raiser Gondola Official Info",
-          type: "Official Gondola Site",
-          domain: "colraiser.it",
-          url: "https://www.colraiser.it/en/",
-          desc: "Col Raiser gondola operating hours, parking information, and ascent rates."
-        },
-        {
-          title: "Seceda Ridgeline Hiking Guide & Map",
-          type: "Travel Blog",
-          domain: "moonhoneytravel.com",
-          url: "https://www.moonhoneytravel.com/seceda-hike-dolomites/",
-          desc: "Step-by-step route breakdown for Seceda loop, Baita Sofie, Pieralongia, and Baita Troier."
-        },
-        {
-          title: "Val Gardena Official Tourism Portal",
-          type: "Tourism Guide",
-          domain: "val-gardena.com",
-          url: "https://www.val-gardena.com/en/tours/detail/hike-on-the-seceda-alpine-pasture/",
-          desc: "Detailed map, elevation profiles, and trail conditions for Mastlé & Seceda hikes."
-        }
-      ],
-      "2024-09-27": [
-        {
-          title: "Trekking on Sassolungo in Val di Fassa (Col Rodella Roundtrip)",
-          type: "Official Route Guide",
-          domain: "dolomiti.it",
-          url: "https://www.dolomiti.it/en/itineraries/trekking/trekking-on-sassolungo-in-val-di-fassa-roundtrip-of-col-rodella",
-          desc: "Official itinerary breakdown covering the Col Rodella and Sassolungo loop with path numbers."
-        },
-        {
-          title: "Rifugio Friedrich August - Location & Useful Information",
-          type: "Hut Official Site",
-          domain: "friedrichaugust.it",
-          url: "https://www.friedrichaugust.it/en/mountain-refuge/location-useful-information",
-          desc: "Official info for the famous bakery hut known for fresh morning krapfen doughnuts."
-        },
-        {
-          title: "Sassolungo Circuit Trail Guide & Map",
-          type: "Travel Blog",
-          domain: "moonhoneytravel.com",
-          url: "https://www.moonhoneytravel.com/sassolungo-hike-dolomites/",
-          desc: "Detailed step-by-step hiking guide, photos, difficulty rating, and trail tips by Moon & Honey Travel."
-        }
-      ],
-      "2024-09-26": [
-        {
-          title: "Val di Fassa Lifts & Rates",
-          type: "Official Timetable",
-          domain: "fassa.com",
-          url: "https://www.fassa.com/EN/Lifts-opening-times-and-prices/",
-          desc: "Timetable and ticket prices for Funivia Sass Pordoi."
-        }
-      ]
-    };
-
     // Trip Dates Definition
     const tripDates = [
       { id: "2024-09-24", label: "Sep 24", day: "Tue", hasData: true },
@@ -304,17 +206,16 @@
       { id: "2024-09-26", label: "Sep 26 ★", day: "Thu", hasData: true, isMain: true },
       { id: "2024-09-27", label: "Sep 27 ★", day: "Fri", hasData: true, isMain: true },
       { id: "2024-09-28", label: "Sep 28", day: "Sat", hasData: false },
-      { id: "2024-09-29", label: "Sep 29 ★", day: "Sun", hasData: true, isMain: true },
+      { id: "2024-09-29", label: "Sep 29", day: "Sun", hasData: false },
       { id: "2024-09-30", label: "Sep 30", day: "Mon", hasData: false },
       { id: "2024-10-01", label: "Oct 1", day: "Tue", hasData: false },
       { id: "2024-10-02", label: "Oct 2", day: "Wed", hasData: false }
     ];
 
-    let currentDate = "2024-09-29";
+    let currentDate = "2024-09-26";
     let currentOptionByDate = {
       "2024-09-26": "A",
-      "2024-09-27": "A",
-      "2024-09-29": "A"
+      "2024-09-27": "A"
     };
 
     let map = null;
@@ -331,100 +232,54 @@
       lat: 46.4764,
       lng: 11.7705,
       type: "stay",
-      desc: "Drive via SS48 / SS242 / SS243. All routes begin and end here.",
+      desc: "Drive via mountain road SS48. All routes begin and end here.",
       icon: "fa-house-chimney",
       sign: "Road SS48 -> Via Canazei 3"
     };
 
-    // Afternoon Play-by-Ear Ideas Data split by date
-    const afternoonIdeasByDate = {
-      "2024-09-29": [
-        {
-          id: "st_magdalena",
-          title: "📸 St. Magdalena & Val di Funes Viewpoint",
-          lat: 46.6436,
-          lng: 11.7225,
-          driveTime: "35 min drive north from Ortisei",
-          badge: "Iconic Postcard View",
-          desc: "Famous view of the tiny alpine church framed by the vertical Odle needle peaks in Val di Funes.",
-          type: "afternoon"
-        },
-        {
-          id: "ortisei_stroll",
-          title: "🛍️ Ortisei Pedestrian Promenade & Cafes",
-          lat: 46.5734,
-          lng: 11.6742,
-          driveTime: "Direct at Cable Car Base",
-          badge: "Town Stroll & Spritz",
-          desc: "Explore woodcarving boutiques, colorful Tyrolean plazas, and enjoy outdoor coffee or spritz in central Ortisei.",
-          type: "afternoon"
-        },
-        {
-          id: "passo_gardena_drive",
-          title: "⛰️ Passo Gardena Scenic Drive Back",
-          lat: 46.5497,
-          lng: 11.8086,
-          driveTime: "25 min drive on return route",
-          badge: "Panoramic Pass Drive",
-          desc: "Drive back over Passo Gardena right beneath the dramatic Cir peaks for sunset photos on your way back to Canazei.",
-          type: "afternoon"
-        },
-        {
-          id: "qc_terme_fassa",
-          title: "🧘 QC Terme Dolomiti Thermal Spa",
-          lat: 46.4278,
-          lng: 11.6912,
-          driveTime: "15 min drive south of Canazei",
-          badge: "Luxury Thermal Spa",
-          desc: "Unwind tired legs in outdoor thermal infinity pools and bio-saunas facing mountain peaks.",
-          type: "afternoon"
-        }
-      ],
-      "2024-09-26": [
-        {
-          id: "fedaia_marmolada",
-          title: "🌊 Lago di Fedaia & Marmolada Glacier",
-          lat: 46.4583,
-          lng: 11.8653,
-          driveTime: "15 min drive from Pordoi",
-          badge: "Scenic Lake Drive",
-          desc: "Drive directly down from Pordoi pass to the dam at the foot of Marmolada Glacier (3,343m) for lakeside coffee & reflections.",
-          type: "afternoon"
-        },
-        {
-          id: "canazei_aperitivo",
-          title: "🍹 Canazei River Walk & Aperitivo",
-          lat: 46.4764,
-          lng: 11.7705,
-          driveTime: "10 min drive from Pordoi",
-          badge: "Town Stroll & Spritz",
-          desc: "Stroll along the Avisio river trail into Canazei town and enjoy an outdoor Aperol Spritz or Hugo with local speck & cheese.",
-          type: "afternoon"
-        }
-      ],
-      "2024-09-27": [
-        {
-          id: "qc_terme",
-          title: "🧘 QC Terme Dolomiti Thermal Spa",
-          lat: 46.4278,
-          lng: 11.6912,
-          driveTime: "15 min drive south",
-          badge: "Luxury Thermal Spa",
-          desc: "Unwind tired legs in outdoor thermal infinity pools, sulfur spring baths, and bio-saunas facing mountain peaks in Pozza di Fassa.",
-          type: "afternoon"
-        },
-        {
-          id: "passo_gardena",
-          title: "⛰️ Passo Gardena Scenic Loop",
-          lat: 46.5497,
-          lng: 11.8086,
-          driveTime: "20 min drive from Sella Pass",
-          badge: "Panoramic Pass Drive",
-          desc: "Drive over Passo Gardena past the dramatic Cir peaks down into Val Gardena before looping back to Canazei.",
-          type: "afternoon"
-        }
-      ]
-    };
+    // Afternoon Play-by-Ear Ideas Data
+    const afternoonIdeasData = [
+      {
+        id: "qc_terme",
+        title: "🧘 QC Terme Thermal Spa",
+        lat: 46.4278,
+        lng: 11.6912,
+        driveTime: "15 min drive south",
+        badge: "Relaxation",
+        desc: "Luxury heated outdoor thermal pools facing mountain peaks, bio-saunas, and relaxation rooms in Pozza di Fassa.",
+        type: "afternoon"
+      },
+      {
+        id: "fedaia_marmolada",
+        title: "🚗 Lago di Fedaia & Marmolada",
+        lat: 46.4583,
+        lng: 11.8653,
+        driveTime: "20 min drive east",
+        badge: "Scenic Lake Drive",
+        desc: "Drive over the dam directly at the foot of Marmolada Glacier (3,343m). Great lakeside coffee & reflections.",
+        type: "afternoon"
+      },
+      {
+        id: "passo_gardena",
+        title: "⛰️ Passo Gardena Scenic Loop",
+        lat: 46.5497,
+        lng: 11.8086,
+        driveTime: "35 min drive loop",
+        badge: "Panoramic Drive",
+        desc: "Drive the famous mountain pass loop around the Sella Group past Cir peaks down into Val Gardena.",
+        type: "afternoon"
+      },
+      {
+        id: "canazei_aperitivo",
+        title: "🍹 Canazei River Walk & Aperitivo",
+        lat: 46.4764,
+        lng: 11.7705,
+        driveTime: "0 min (Town Center)",
+        badge: "Casual Town Stroll",
+        desc: "Walk along Avisio river and grab an outdoor Aperol Spritz or Hugo with local speck & cheese in Canazei town.",
+        type: "afternoon"
+      }
+    ];
 
     // Sep 24 Travel & Meetup Schedule
     const day24Schedule = [
@@ -478,10 +333,10 @@
     const pordoiOptionsData = {
       "A": {
         distance: "7.5 km Loop",
-        btnLabel: "Opt A ⭐",
+        btnLabel: "Opt A",
         subLabel: "Hike Up / Lift Down",
-        title: "Option A: Hike UP & Cable Car DOWN (Knee-Saver) — Primary Choice",
-        desc: "★ PRIMARY CHOICE: Hike up steep scree switchbacks (Trail 627) to Forcella Pordoi, climb to Piz Boè summit (3,152m), traverse to top station, and ride cable car down directly to your parked car.",
+        title: "Option A: Hike UP & Cable Car DOWN (Knee-Saver)",
+        desc: "Hike up steep scree switchbacks (Trail 627) to Forcella Pordoi, climb to Piz Boè summit (3,152m), traverse to top station, and ride cable car down directly to your parked car.",
         schedule: [
           { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive east on SS48 switchbacks up to Passo Pordoi (~15-20 mins)." },
           { num: 1, time: "08:50 AM", title: "Passo Pordoi Parking & Trailhead", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Park in the paved lot near cable car base. Locate trailhead behind chapel.", icon: "fa-square-p-parking", sign: "[627] Forcella Pordoi / Rif. Boè" },
@@ -497,8 +352,8 @@
         distance: "7.0 km Loop",
         btnLabel: "Opt B",
         subLabel: "Lift Up / Hike Down",
-        title: "Option B: Cable Car UP & Hike DOWN (Backup Choice)",
-        desc: "Backup Choice: Ride Funivia Sass Pordoi cable car up to 2,950m plateau, scramble up Trail 638 to Piz Boè summit (3,152m), and descend on foot down Trail 627 scree switchbacks back to Passo Pordoi.",
+        title: "Option B: Cable Car UP & Hike DOWN",
+        desc: "Ride Funivia Sass Pordoi cable car up to 2,950m plateau, scramble up Trail 638 to Piz Boè summit (3,152m), and descend on foot down Trail 627 scree switchbacks back to Passo Pordoi.",
         schedule: [
           { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive east on SS48 switchbacks up to Passo Pordoi." },
           { num: 1, time: "08:50 AM", title: "Passo Pordoi Cable Car Base", lat: 46.4878, lng: 11.8123, type: "coffin", desc: "Park in lot and purchase one-way uphill ticket for Funivia Sass Pordoi.", icon: "fa-square-p-parking", sign: "Funivia Sass Pordoi (Uphill Ticket)" },
@@ -509,6 +364,23 @@
           { num: 6, time: "02:00 PM", title: "Passo Pordoi Parking", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Reach bottom parking lot at Pordoi Pass.", icon: "fa-square-p-parking", sign: "Trailhead Passo Pordoi" },
           { ...ACCOMMODATION, num: 7, time: "02:20 PM", title: "Return to Accommodation Base", desc: "Drive SS48 back down to Via Canazei 3." }
         ]
+      },
+      "C": {
+        distance: "9.5 km Loop",
+        btnLabel: "Opt C",
+        subLabel: "Full Hike Up & Down",
+        title: "Option C: Full Hike UP & DOWN (100% On Foot)",
+        desc: "100% physical hike on foot without cable car. Ascend Trail 627 scree switchbacks to Piz Boè summit (3,152m) and descend the full scree couloir back to Passo Pordoi.",
+        schedule: [
+          { ...ACCOMMODATION, time: "08:30 AM", desc: "Depart Via Canazei 3 and drive SS48 up to Passo Pordoi." },
+          { num: 1, time: "08:50 AM", title: "Passo Pordoi Trailhead", lat: 46.4878, lng: 11.8123, type: "hut", desc: "Park at Passo Pordoi lot and locate Trail 627 trailhead.", icon: "fa-square-p-parking", sign: "[627] Forcella Pordoi / Rif. Boè" },
+          { num: 2, time: "09:15 AM", title: "Scree Gully Climb (Trail 627)", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Steep ascent up continuous switchbacks inside the narrow rock canyon.", icon: "fa-person-hiking", sign: "[627] Forcella Pordoi" },
+          { num: 3, time: "10:30 AM", title: "Rifugio Forcella Pordoi (2,848m)", lat: 46.4988, lng: 11.8102, type: "hut", desc: "Reach notch gap for a brief rest before summit push.", icon: "fa-mug-hot", sign: "[638] Piz Boè" },
+          { num: 4, time: "11:45 AM", title: "Piz Boè Summit & Capanna Fassa (3,152m)", lat: 46.5088, lng: 11.8217, type: "doughnut", desc: "Summit accomplishment at 3,152m elevation! Summit refuge lunch.", icon: "fa-utensils", sign: "[638] Capanna Piz Fassa" },
+          { num: 5, time: "01:00 PM", title: "Rifugio Boè Junction", lat: 46.5080, lng: 11.8120, type: "hut", desc: "Descend north on Trail 638 towards Rifugio Boè and loop back west across plateau.", icon: "fa-mountain-sun", sign: "[627] Forcella Pordoi / Passo Pordoi" },
+          { num: 6, time: "02:00 PM", title: "Descend Scree Gully to Pordoi Pass", lat: 46.4935, lng: 11.8105, type: "hut", desc: "Hike down scree switchbacks on Trail 627 back to Passo Pordoi parking.", icon: "fa-person-hiking", sign: "[627] Passo Pordoi" },
+          { ...ACCOMMODATION, num: 7, time: "03:00 PM", title: "Return to Accommodation Base", desc: "Drive SS48 back down to Via Canazei 3." }
+        ]
       }
     };
 
@@ -516,10 +388,10 @@
     const sassolungoOptionsData = {
       "A": {
         distance: "17 km Loop",
-        btnLabel: "Opt A ⭐",
-        subLabel: "⭐ Preferred #1",
-        title: "Option A: 17km Outer Loop (Passo Sella Start) — ⭐ Preferred #1",
-        desc: "⭐ PREFERRED CHOICE #1: Full 17 km outer perimeter hike starting directly at Passo Sella (Trail 557 -> 527 -> 526). Early 07:00 AM start gets fresh warm krapfen at Rif. Friedrich August, zero lift cutoff stress, and a smooth downhill finish to your car.",
+        btnLabel: "Opt A",
+        subLabel: "17km Outer",
+        title: "Option A: 17km Outer Perimeter Loop",
+        desc: "Full 17 km perimeter hike around Sassolungo starting from stay (Via Canazei 3) via Sella Pass (Trail 557 -> 527 -> 526), ending with a round-trip ride on the coffin cable car.",
         schedule: [
           { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart accommodation base by car and drive up pass road SS48 -> SS242 towards Passo Sella." },
           { num: 1, time: "07:15 AM", title: "Sella Pass Parking & Trailhead", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park in paid lot at Sella Pass. Locate wooden trail signpost '557 Friedrich August Weg' behind chapel.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg / Rif. Friedrich August" },
@@ -533,12 +405,29 @@
           { ...ACCOMMODATION, num: 9, time: "04:30 PM", title: "Return to Accommodation Base", desc: "Drive SS242 -> SS48 back down to Via Canazei 3 for evening relaxation." }
         ]
       },
+      "B": {
+        distance: "8.5 km Inner",
+        btnLabel: "Opt B",
+        subLabel: "8.5km Inner",
+        title: "Option B: 8.5km Inner Canyon Circuit",
+        desc: "Shorter 8.5 km circuit using Trail 557 for doughnuts, then taking coffin cable car up to 2,685m and descending through inner canyon on Trail 525.",
+        schedule: [
+          { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart Via Canazei 3 and drive up road SS242 to Sella Pass." },
+          { num: 1, time: "07:15 AM", title: "Sella Pass Trailhead", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park at Sella Pass trailhead.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg" },
+          { num: 2, time: "08:00 AM", title: "Rifugio Friedrich August (Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Follow Trail 557 West for 20 mins for morning krapfen doughnut stop and coffee.", icon: "fa-mug-hot", sign: "[557] Rif. Friedrich August" },
+          { num: 3, time: "09:15 AM", title: "Coffin Cable Car Base Station", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Walk 20 mins back East on Trail 557 to Sella Pass and board standing coffin gondola.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo'" },
+          { num: 4, time: "09:45 AM", title: "Rifugio Toni Demetz (Gap Notch 2,685m)", lat: 46.5165, lng: 11.7410, type: "coffin", desc: "Arrive at top station. Look for Trail Sign 525. Begin steep scree descent down Trail 525 into gorge.", icon: "fa-person-hiking", sign: "[525] Rif. Vicenza / Langkofelhütte" },
+          { num: 5, time: "11:15 AM", title: "Rifugio Vicenza (Lunch)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Reach inner basin at bottom of Trail 525. Alpine lunch break surrounded by vertical rock walls.", icon: "fa-utensils", sign: "[526] Rif. Comici / Passo Sella" },
+          { num: 6, time: "01:15 PM", title: "Rifugio Comici & Stone City", lat: 46.5298, lng: 11.7610, type: "hut", desc: "Take Trail 526 East through northern face boulder fields and Città dei Sassi back to Sella Pass.", icon: "fa-cubes-stacked", sign: "[526] Città dei Sassi / Passo Sella" },
+          { ...ACCOMMODATION, num: 7, time: "02:30 PM", title: "Return to Accommodation Base", desc: "Drive road SS242 -> SS48 back to Via Canazei 3." }
+        ]
+      },
       "C": {
         distance: "Lift + 17km",
-        btnLabel: "Opt C ⭐",
-        subLabel: "⭐ Preferred #2",
-        title: "Option C: Col Rodella Cable Car Loop — ⭐ Preferred #2",
-        desc: "⭐ PREFERRED CHOICE #2: Uses Col Rodella Cable Car from Campitello to shave ~150m of trail climbing. Joins Trail 557 for doughnuts, completes full outer circuit (557 -> 527 -> 526), and includes the coffin gondola ride.",
+        btnLabel: "Opt C",
+        subLabel: "Lift + 17km",
+        title: "Option C: Cable Car Access Outer Circuit",
+        desc: "Uses Col Rodella Cable Car from Campitello, joins Trail 557 for doughnuts, completes full outer circuit (557 -> 527 -> 526), and includes coffin lift.",
         schedule: [
           { ...ACCOMMODATION, time: "07:45 AM", desc: "Depart Via Canazei 3 for 10-min drive down SS48 to Campitello cable car station." },
           { num: 1, time: "08:00 AM", title: "Campitello Cable Car Valley Station", lat: 46.4758, lng: 11.7520, type: "hut", desc: "Park at valley station and purchase Col Rodella cable car lift pass.", icon: "fa-square-p-parking", sign: "Sign: 'Funivia Campitello - Col Rodella'" },
@@ -551,60 +440,24 @@
           { num: 8, time: "03:45 PM", title: "Coffin Cable Car Ride", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "At Passo Sella, ride standing coffin gondola up to Rifugio Toni Demetz (2,685m) and back down.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo'" },
           { ...ACCOMMODATION, num: 9, time: "05:00 PM", title: "Return Cable Car & Accommodation", desc: "Walk 20 mins uphill on Trail 529 back to Col Rodella, take cable car down to Campitello, and drive back to Via Canazei 3." }
         ]
-      }
-    };
-
-    // Sep 29 Options: Seceda Loop
-    const secedaOptionsData = {
-      "A": {
-        distance: "8.5 km Loop",
-        btnLabel: "Opt A ⭐",
-        subLabel: "Ortisei Cable Car",
-        title: "Option A: Seceda Top-Down Direct Loop (Ortisei Cable Car) — ⭐ Recommended",
-        desc: "⭐ RECOMMENDED CHOICE: Take Ortisei–Furnes–Seceda cable car straight to Seceda Summit (2,450m). Walk the dramatic ridge, visit Baita Sofie, Pieralongia twin spires, Baita Troier, and loop back.",
-        schedule: [
-          { ...ACCOMMODATION, time: "08:00 AM", desc: "Depart Via Canazei 3 and drive north via SS48 / SS242 over Sella Pass into Val Gardena to Ortisei (~45 mins)." },
-          { num: 1, time: "08:45 AM", title: "Ortisei Seceda Cable Car Base", lat: 46.5734, lng: 11.6742, type: "coffin", desc: "Park in underground garage at Seceda Cable Car in Ortisei. Board cable car to Furnes then Seceda.", icon: "fa-cable-car", sign: "Funivie Seceda Ortisei" },
-          { num: 2, time: "09:15 AM", title: "Seceda Ridgeline Viewpoint (2,518m)", lat: 46.5982, lng: 11.7241, type: "doughnut", desc: "Step out onto the famous dramatic cliff view looking over the jagged Odle / Geisler needles.", icon: "fa-mountain-sun", sign: "Sign: 'Panoramapoint Seceda 2518m'" },
-          { num: 3, time: "09:45 AM", title: "Baita Sofie Hütte", lat: 46.5962, lng: 11.7258, type: "hut", desc: "Hike along Trail 1 to Baita Sofie for morning coffee or outdoor glass of wine facing Cir peaks.", icon: "fa-mug-hot", sign: "[1] Pieralongia / Baita Troier" },
-          { num: 4, time: "10:45 AM", title: "Malga Pieralongia Alm & Twin Spires", lat: 46.5935, lng: 11.7485, type: "hut", desc: "Hike East on Trail 2B past iconic towering dual boulder monoliths. Quiet alpine hut stop.", icon: "fa-cubes-stacked", sign: "[2B] Pieralongia / Regensburger Hütte" },
-          { num: 5, time: "12:00 PM", title: "Baita Troier Hütte (Lunch)", lat: 46.5908, lng: 11.7352, type: "hut", desc: "Loop South on Trail 13B to Baita Troier. Traditional South Tyrolean lunch overlooking Mastlé pastures.", icon: "fa-utensils", sign: "[13B] Baita Troier / Seceda" },
-          { num: 6, time: "01:30 PM", title: "Seceda Cable Car Top Station", lat: 46.5975, lng: 11.7230, type: "coffin", desc: "Walk easy uphill trail back to Seceda top station. Ride cable car down to Ortisei.", icon: "fa-cable-car", sign: "Cable Car Down to Ortisei" },
-          { ...ACCOMMODATION, num: 7, time: "02:30 PM", title: "Return to Base or Afternoon Option", desc: "Arrive back in Ortisei. Explore Ortisei village, drive to St. Magdalena, or head back to Canazei." }
-        ]
       },
-      "B": {
-        distance: "10.5 km Loop",
-        btnLabel: "Opt B",
-        subLabel: "Col Raiser Gondola",
-        title: "Option B: Col Raiser Bottom-Up Circuit (Santa Cristina)",
-        desc: "Shorter 35-min drive to Santa Cristina. Ride Col Raiser gondola up to 2,107m, hike up past Regensburger Hütte and Pieralongia to Seceda ridge, and loop back down.",
+      "D": {
+        distance: "19.5 km Combo",
+        btnLabel: "Opt D",
+        subLabel: "Combo + 🍩",
+        title: "Option D: Grand Combo (Outer + Inner + Coffin Lift)",
+        desc: "Grand Inner & Outer Combo: Start on Trail 557 for fresh doughnuts, take coffin lift up to 2,685m, descend inner canyon (Trail 525), and loop outer perimeter (Trail 527 -> 557 -> 526).",
         schedule: [
-          { ...ACCOMMODATION, time: "08:15 AM", desc: "Depart Via Canazei 3 and drive SS48 / SS242 to Santa Cristina Col Raiser valley station (~35 mins)." },
-          { num: 1, time: "08:50 AM", title: "Col Raiser Valley Station", lat: 46.5645, lng: 11.7380, type: "coffin", desc: "Park in valley lot at Santa Cristina and take Col Raiser gondola up to 2,107m.", icon: "fa-cable-car", sign: "Telecabina Col Raiser" },
-          { num: 2, time: "09:15 AM", title: "Col Raiser Top Station (2,107m)", lat: 46.5835, lng: 11.7360, type: "hut", desc: "Exit station and join Trail 4 North towards Regensburger Hütte (Rifugio Firenze).", icon: "fa-person-hiking", sign: "[4] Regensburger Hütte" },
-          { num: 3, time: "09:45 AM", title: "Regensburger Hütte / Rifugio Firenze", lat: 46.5812, lng: 11.7482, type: "hut", desc: "Historic stone refuge nestled in Mastlé alpine meadows under the Odle peaks.", icon: "fa-mug-hot", sign: "[2B] Pieralongia / Seceda" },
-          { num: 4, time: "10:45 AM", title: "Malga Pieralongia Alm", lat: 46.5935, lng: 11.7485, type: "hut", desc: "Climb Trail 2B past the famous twin rock pinnacles.", icon: "fa-cubes-stacked", sign: "[1] Seceda Ridge" },
-          { num: 5, time: "11:45 AM", title: "Seceda Ridgeline Viewpoint & Baita Sofie", lat: 46.5982, lng: 11.7241, type: "doughnut", desc: "Reach crest of Seceda ridge (2,518m) for the iconic cliff view over Odle peaks. Lunch at Baita Sofie.", icon: "fa-utensils", sign: "[1] Baita Sofie / Seceda Summit" },
-          { num: 6, time: "01:30 PM", title: "Baita Troier & Col Raiser Descent", lat: 46.5908, lng: 11.7352, type: "hut", desc: "Descend Trail 13B past Baita Troier back to Col Raiser top gondola station.", icon: "fa-person-hiking", sign: "Col Raiser Top Station" },
-          { ...ACCOMMODATION, num: 7, time: "02:45 PM", title: "Return to Accommodation Base", desc: "Ride gondola down to Santa Cristina and drive back to Via Canazei 3." }
-        ]
-      },
-      "C": {
-        distance: "12.0 km Traverse",
-        btnLabel: "Opt C",
-        subLabel: "Grand Traverse",
-        title: "Option C: Grand Seceda & Mastlé Pasture Traverse",
-        desc: "Full comprehensive traverse covering the top Seceda ridge, Pieralongia, Regensburger Hütte, Mastlé pastures, and Col Raiser scenic plateau.",
-        schedule: [
-          { ...ACCOMMODATION, time: "08:00 AM", desc: "Depart Via Canazei 3 and drive to Ortisei cable car base (~45 mins)." },
-          { num: 1, time: "08:45 AM", title: "Ortisei Seceda Base Station", lat: 46.5734, lng: 11.6742, type: "coffin", desc: "Board Seceda Cable Car up to 2,450m summit station.", icon: "fa-cable-car", sign: "Seceda Cable Car" },
-          { num: 2, time: "09:15 AM", title: "Seceda Summit Ridge Viewpoint", lat: 46.5982, lng: 11.7241, type: "doughnut", desc: "Iconic ridge photos along the dramatic edge.", icon: "fa-mountain-sun", sign: "Panoramapoint 2518m" },
-          { num: 3, time: "10:15 AM", title: "Malga Pieralongia Alm", lat: 46.5935, lng: 11.7485, type: "hut", desc: "Traverse high trail 2B past Pieralongia twin spires.", icon: "fa-cubes-stacked", sign: "[2B] Regensburger Hütte" },
-          { num: 4, time: "11:30 AM", title: "Regensburger Hütte (Rifugio Firenze)", lat: 46.5812, lng: 11.7482, type: "hut", desc: "Descend into Mastlé meadow bowl for authentic refuge lunch.", icon: "fa-utensils", sign: "[4] Col Raiser / Fermeda" },
-          { num: 5, time: "01:00 PM", title: "Rifugio Fermeda & Baita Troier", lat: 46.5890, lng: 11.7310, type: "hut", desc: "Loop back West across meadows towards Fermeda and Troier huts.", icon: "fa-person-hiking", sign: "[1] Seceda" },
-          { num: 6, time: "02:15 PM", title: "Return to Seceda Cable Car Base", lat: 46.5975, lng: 11.7230, type: "coffin", desc: "Climb back to Seceda top lift and ride cable car down to Ortisei.", icon: "fa-cable-car", sign: "Ortisei Downhill Cable Car" },
-          { ...ACCOMMODATION, num: 7, time: "03:30 PM", title: "Return to Base", desc: "Drive back to Via Canazei 3." }
+          { ...ACCOMMODATION, time: "06:50 AM", desc: "Depart accommodation base (Via Canazei 3) and drive road SS242 to Sella Pass." },
+          { num: 1, time: "07:15 AM", title: "Sella Pass Trailhead & Parking", lat: 46.5090, lng: 11.7570, type: "hut", desc: "Park in paid lot at Sella Pass. Locate trailhead sign '557 Friedrich August Weg'.", icon: "fa-square-p-parking", sign: "[557] Friedrich August Weg" },
+          { num: 2, time: "07:45 AM", title: "Rifugio Friedrich August (Fresh Doughnuts!)", lat: 46.5042, lng: 11.7405, type: "doughnut", desc: "Walk 20 mins West on Trail 557. Enjoy warm cream-filled krapfen with espresso straight from oven.", icon: "fa-mug-hot", sign: "[557] Rif. Friedrich August" },
+          { num: 3, time: "08:45 AM", title: "Coffin Cable Car Base Station", lat: 46.5098, lng: 11.7562, type: "coffin", desc: "Walk 20 mins back East on Trail 557 to Sella Pass and board standing 2-person coffin gondola.", icon: "fa-cable-car", sign: "Sign: 'Cabinovia Sassolungo'" },
+          { num: 4, time: "09:15 AM", title: "Rifugio Toni Demetz (2,685m Gap)", lat: 46.5165, lng: 11.7410, type: "coffin", desc: "High notch pass between peaks. Locate Trail Sign 525 and begin steep scree descent into inner gorge.", icon: "fa-person-hiking", sign: "[525] Rif. Vicenza / Langkofelhütte" },
+          { num: 5, time: "10:45 AM", title: "Rifugio Vicenza (Langkofelhütte)", lat: 46.5222, lng: 11.7228, type: "hut", desc: "Reach inner basin. Exit gorge onto Trail 527 West/South towards Rifugio Sasso Piatto.", icon: "fa-mountain-sun", sign: "[527] Rif. Sasso Piatto (Plattkofelhütte)" },
+          { num: 6, time: "01:00 PM", title: "Rifugio Sasso Piatto (Lunch)", lat: 46.5012, lng: 11.7058, type: "hut", desc: "Alpine lunch stop. At hut, turn LEFT onto Trail 557 East towards Rifugio Pertini and Sella Pass.", icon: "fa-utensils", sign: "[557] Rif. Pertini / Passo Sella" },
+          { num: 7, time: "02:30 PM", title: "Rifugio Sandro Pertini", lat: 46.5015, lng: 11.7225, type: "hut", desc: "Hike East along high balcony Trail 557 enjoying Val di Fassa valley panoramas.", icon: "fa-person-hiking", sign: "[557] Passo Sella" },
+          { num: 8, time: "03:45 PM", title: "Città dei Sassi (Stone City)", lat: 46.5298, lng: 11.7610, type: "hut", desc: "Traverse past Comici on Trail 526 through giant boulder fields back to Sella Pass parking.", icon: "fa-cubes-stacked", sign: "[526] Città dei Sassi / Passo Sella" },
+          { ...ACCOMMODATION, num: 9, time: "04:45 PM", title: "Return to Accommodation Base", desc: "Drive road SS242 -> SS48 back to Via Canazei 3 for evening relaxation." }
         ]
       }
     };
@@ -658,10 +511,7 @@
         titleLabel.innerHTML = `<i class="fa-solid fa-route"></i> Forcella Pordoi Options (Sep 26)`;
       } else if (currentDate === "2024-09-27") {
         data = sassolungoOptionsData;
-        titleLabel.innerHTML = `<i class="fa-solid fa-star text-amber-400"></i> Sassolungo Preferences (Sep 27)`;
-      } else if (currentDate === "2024-09-29") {
-        data = secedaOptionsData;
-        titleLabel.innerHTML = `<i class="fa-solid fa-mountain-sun text-emerald-400"></i> Seceda & Odle Options (Sep 29)`;
+        titleLabel.innerHTML = `<i class="fa-solid fa-route"></i> Sassolungo Loop Options (Sep 27)`;
       } else {
         return;
       }
@@ -776,12 +626,6 @@
         const activeOpt = currentOptionByDate["2024-09-27"] || "A";
         renderScheduleAndMap(sassolungoOptionsData[activeOpt].schedule, true);
 
-      } else if (currentDate === "2024-09-29") {
-        optionHeader.classList.remove("hidden");
-        renderOptionButtons();
-        const activeOpt = currentOptionByDate["2024-09-29"] || "A";
-        renderScheduleAndMap(secedaOptionsData[activeOpt].schedule, true);
-
       } else if (currentDate === "2024-09-24") {
         optionHeader.classList.add("hidden");
         renderScheduleAndMap(day24Schedule, false);
@@ -799,15 +643,12 @@
               <h3 class="text-base font-semibold text-slate-200">No schedule planned for ${dateObj.label} (${dateObj.day}) yet</h3>
               <p class="text-xs text-slate-400 mt-1">This date is currently an open itinerary shell ready for your custom activities.</p>
             </div>
-            <div class="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <div class="flex items-center justify-center gap-2 pt-2">
               <button onclick="changeDate('2024-09-26')" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-1.5">
                 <i class="fa-solid fa-mountain"></i> Forcella Pordoi (Sep 26)
               </button>
               <button onclick="changeDate('2024-09-27')" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-1.5">
                 <i class="fa-solid fa-mountain"></i> Sassolungo (Sep 27)
-              </button>
-              <button onclick="changeDate('2024-09-29')" class="px-3 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow transition-all flex items-center gap-1.5">
-                <i class="fa-solid fa-mountain-sun"></i> Seceda (Sep 29)
               </button>
             </div>
           </div>
@@ -847,12 +688,6 @@
           </div>
         ` : '';
 
-        const refBtn = (item.type === 'doughnut' || item.type === 'coffin' || item.num === 1) ? `
-          <button onclick="event.stopPropagation(); openRefModal()" class="px-2 py-0.5 rounded bg-indigo-950 hover:bg-indigo-900 text-indigo-300 border border-indigo-700/80 text-[10px] font-bold inline-flex items-center gap-1 transition-all">
-            <i class="fa-solid fa-bookmark text-[9px]"></i> REF
-          </button>
-        ` : '';
-
         return `
           <div onclick="focusWaypoint(${item.lat}, ${item.lng})" class="bg-slate-900/80 hover:bg-slate-900 border border-slate-700/60 rounded-xl p-3 shadow-sm transition-all cursor-pointer group hover:border-slate-500">
             <div class="flex items-start justify-between gap-2">
@@ -862,12 +697,9 @@
                 </span>
                 <h4 class="text-xs font-bold text-slate-100 group-hover:text-sky-300 transition-colors">${item.title}</h4>
               </div>
-              <div class="flex items-center gap-1.5 shrink-0">
-                ${refBtn}
-                <span class="text-[10px] font-semibold ${typeBg} px-2 py-0.5 rounded-md border">
-                  ${item.time}
-                </span>
-              </div>
+              <span class="text-[10px] font-semibold ${typeBg} px-2 py-0.5 rounded-md border shrink-0">
+                ${item.time}
+              </span>
             </div>
             <p class="text-[11px] text-slate-400 mt-2 leading-relaxed pl-8">${item.desc}</p>
             <div class="pl-8">${signBadge}</div>
@@ -903,15 +735,13 @@
 
       // Append Afternoon Play-by-Ear Ideas Section if applicable
       if (showAfternoonModule) {
-        const afternoonIdeasData = afternoonIdeasByDate[currentDate] || [];
-
         htmlContent += `
           <div class="mt-6 pt-4 border-t border-slate-700/80">
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-xs font-bold uppercase tracking-wider text-teal-400 flex items-center gap-1.5">
-                <i class="fa-solid fa-compass"></i> Afternoon Ideas (${currentDate === '2024-09-29' ? 'Post-Seceda Hike' : currentDate === '2024-09-26' ? 'Post-Pordoi Hike' : 'Post-Sassolungo Hike'})
+                <i class="fa-solid fa-compass"></i> Afternoon Ideas (Play by Ear)
               </h3>
-              <span class="text-[10px] bg-teal-950 text-teal-300 border border-teal-800 px-2 py-0.5 rounded-full font-medium">Play By Ear</span>
+              <span class="text-[10px] bg-teal-950 text-teal-300 border border-teal-800 px-2 py-0.5 rounded-full font-medium">Post-Hike</span>
             </div>
             <p class="text-[11px] text-slate-400 mb-3">Optional ideas after completing your hike. Tap any option below to highlight it on the map:</p>
             
@@ -1025,49 +855,6 @@
       const content = document.getElementById("legendContent");
       content.classList.toggle("hidden");
       btn.querySelector("i").classList.toggle("rotate-180");
-    }
-
-    function openRefModal() {
-      const modal = document.getElementById("refModal");
-      const listContainer = document.getElementById("modalRefList");
-      const title = document.getElementById("modalRefTitle");
-      const subtitle = document.getElementById("modalRefSubtitle");
-
-      const refs = dayReferences[currentDate] || [];
-
-      const dateObj = tripDates.find(d => d.id === currentDate);
-      title.textContent = `References for ${dateObj ? dateObj.label : currentDate}`;
-      subtitle.textContent = `${refs.length} curated link(s) for official sites, ticket info & blogs`;
-
-      if (refs.length === 0) {
-        listContainer.innerHTML = `
-          <div class="text-center py-8 text-slate-400 text-xs">
-            No reference links attached for this date yet.
-          </div>
-        `;
-      } else {
-        listContainer.innerHTML = refs.map(r => `
-          <a href="${r.url}" target="_blank" rel="noopener noreferrer" class="block bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 hover:border-indigo-500/60 rounded-xl p-3 transition-all group shadow-sm">
-            <div class="flex items-start justify-between gap-2">
-              <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/80 uppercase tracking-wider">
-                ${r.type}
-              </span>
-              <span class="text-[11px] text-indigo-400 group-hover:text-indigo-300 font-medium flex items-center gap-1">
-                ${r.domain} <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-              </span>
-            </div>
-            <h4 class="text-xs font-bold text-white group-hover:text-indigo-300 mt-1.5 leading-snug">${r.title}</h4>
-            <p class="text-[11px] text-slate-400 mt-1 leading-relaxed">${r.desc}</p>
-          </a>
-        `).join("");
-      }
-
-      modal.classList.remove("hidden");
-    }
-
-    function closeRefModal() {
-      const modal = document.getElementById("refModal");
-      modal.classList.add("hidden");
     }
   </script>
 </body>
