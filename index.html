@@ -83,8 +83,18 @@
     </div>
   </header>
 
+  <!-- Mobile Top Nav (Moved above departure time) -->
+  <div class="md:hidden flex bg-slate-800 border-b border-slate-700 z-30 shrink-0">
+    <button onclick="switchMobileView('schedule')" id="btnMobileSchedule" class="flex-1 py-2.5 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-list-check"></i> Schedule
+    </button>
+    <button onclick="switchMobileView('map')" id="btnMobileMap" class="flex-1 py-2.5 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-map-location-dot"></i> Map View
+    </button>
+  </div>
+
   <!-- Main Layout -->
-  <div class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
+  <div class="flex-1 flex flex-col-reverse md:flex-row overflow-hidden relative">
 
     <!-- Sidebar / Itinerary -->
     <div id="schedulePanel" class="w-full md:w-[420px] lg:w-[460px] bg-slate-800/95 backdrop-blur border-r border-slate-700 flex flex-col h-full z-10 transition-all duration-300">
@@ -97,20 +107,25 @@
         <input type="time" id="startTimeInput" onchange="updateDepartureTime(this.value)" class="bg-slate-800 text-white text-xs px-2 py-1 rounded border border-slate-600 focus:outline-none focus:border-sky-400">
       </div>
 
-      <!-- Route Header (Options for Sep 26) -->
+      <!-- Route Header -->
       <div id="optionSelectorHeader" class="p-3 md:p-4 border-b border-slate-700 bg-slate-800/80 shrink-0">
         <div class="flex items-center justify-between mb-2">
           <span id="routeTitleLabel" class="text-xs font-semibold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
             <i class="fa-solid fa-route"></i> Route Options
           </span>
-          <span id="routeDistanceBadge" class="text-xs px-2 py-0.5 rounded-full bg-sky-950 text-sky-300 border border-sky-800 font-medium">
-            7.5 km Loop
-          </span>
+          <div class="flex items-center gap-2">
+            <span id="routeDistanceBadge" class="text-xs px-2 py-0.5 rounded-full bg-sky-950 text-sky-300 border border-sky-800 font-medium">
+              7.5 km Loop
+            </span>
+            <button onclick="toggleMainDesc()" id="btnToggleMainDesc" class="text-slate-400 hover:text-white text-xs p-1">
+              <i id="iconToggleMainDesc" class="fa-solid fa-chevron-up"></i>
+            </button>
+          </div>
         </div>
         
         <div id="optionsGrid" class="grid gap-1 bg-slate-900/80 p-1 rounded-xl border border-slate-700/60"></div>
         
-        <p id="optionDescription" class="text-xs text-slate-300 mt-2.5 bg-slate-900/50 p-2.5 rounded-lg border border-slate-700/40 leading-relaxed">
+        <p id="optionDescription" class="text-xs text-slate-300 mt-2.5 bg-slate-900/50 p-2.5 rounded-lg border border-slate-700/40 leading-relaxed transition-all">
           Option description...
         </p>
       </div>
@@ -179,21 +194,15 @@
             <span class="w-3 h-3 rounded-full bg-teal-500 border border-teal-300 inline-block shadow"></span>
             <span>Afternoon Play-by-Ear Spot</span>
           </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-amber-600 border border-amber-300 inline-block shadow"></span>
+            <span>Restaurant Recommendation</span>
+          </div>
         </div>
       </div>
 
     </div>
 
-  </div>
-
-  <!-- Mobile Bottom Nav -->
-  <div class="md:hidden flex bg-slate-800 border-t border-slate-700 z-30 shrink-0">
-    <button onclick="switchMobileView('schedule')" id="btnMobileSchedule" class="flex-1 py-3 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2">
-      <i class="fa-solid fa-list-check"></i> Schedule
-    </button>
-    <button onclick="switchMobileView('map')" id="btnMobileMap" class="flex-1 py-3 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2">
-      <i class="fa-solid fa-map-location-dot"></i> Map View
-    </button>
   </div>
 
   <script>
@@ -202,7 +211,7 @@
       { id: "2024-09-25", label: "Sep 25", day: "Wed", hasData: false },
       { id: "2024-09-26", label: "Sep 26 ★", day: "Thu", hasData: true, isMain: true },
       { id: "2024-09-27", label: "Sep 27 ★", day: "Fri", hasData: true, isMain: true },
-      { id: "2024-09-28", label: "Sep 28", day: "Sat", hasData: true },
+      { id: "2024-09-28", label: "Sep 28 ★", day: "Sat", hasData: true, isMain: true },
       { id: "2024-09-29", label: "Sep 29 ★", day: "Sun", hasData: true, isMain: true },
       { id: "2024-09-30", label: "Sep 30", day: "Mon", hasData: false },
       { id: "2024-10-01", label: "Oct 1", day: "Tue", hasData: false },
@@ -211,9 +220,9 @@
 
     let currentDate = "2024-09-26";
     let currentOptionByDate = { "2024-09-26": "A" };
-    let markerMap = {}; // Registry for linking timeline items to leaflet markers
+    let markerMap = {}; 
+    let isMainDescExpanded = true;
 
-    // Dynamic Departure Start Times (minutes from midnight)
     let departureTimes = {
       "2024-09-24": 600, // 10:00 AM
       "2024-09-26": 480, // 08:00 AM
@@ -228,7 +237,6 @@
     let tileLayers = {};
     let currentTileLayer = null;
 
-    // Base accommodation objects
     const BASE_CASA_CANAZEI = {
       num: 0,
       id: "base_casa_canazei",
@@ -253,7 +261,6 @@
       sign: "St. Pankraz / San Pancrazio"
     };
 
-    // Afternoon Ideas for Sep 26
     const afternoonIdeasDataSep26 = [
       {
         id: "arabba_village",
@@ -297,8 +304,17 @@
       }
     ];
 
-    // Afternoon Ideas for Sep 27
     const afternoonIdeasDataSep27 = [
+      {
+        id: "lago_di_carezza_27",
+        title: "🌊 Lago di Carezza (Karersee)",
+        lat: 46.4093,
+        lng: 11.5750,
+        driveTime: "30 min drive from Sella / Canazei",
+        desc: "Vibrant emerald alpine lake reflecting Latemar peaks. Easy scenic stroll around the shore.",
+        type: "afternoon",
+        refUrl: "https://www.eggental.com/en/carezza-lake"
+      },
       {
         id: "canazei_aperitivo",
         title: "🍹 Canazei River Walk & Aperitivo",
@@ -330,7 +346,73 @@
       }
     ];
 
-    // Day Schedules
+    const afternoonIdeasDataSep28 = [];
+
+    const afternoonIdeasDataSep29 = [
+      {
+        id: "ortisei_town",
+        title: "☕ Ortisei Town Stroll & Gelato",
+        lat: 46.5734,
+        lng: 11.6713,
+        driveTime: "0 min (Direct from Seceda Lift)",
+        desc: "Stretch legs in Ortisei's pedestrian village for an espresso, alpine pastries, or gelato.",
+        type: "afternoon"
+      },
+      {
+        id: "lago_di_carezza_29",
+        title: "🌊 Lago di Carezza (Karersee)",
+        lat: 46.4093,
+        lng: 11.5750,
+        driveTime: "40 min drive from Ortisei",
+        desc: "Famous vibrant emerald alpine lake reflecting the Latemar mountain towers with a gentle 30-min shore walk.",
+        type: "afternoon",
+        refUrl: "https://www.eggental.com/en/carezza-lake"
+      }
+    ];
+
+    const restaurantIdeasDataSep29 = [
+      {
+        id: "rest_forsterbrau",
+        title: "🍺 Forsterbräu Merano",
+        lat: 46.6706,
+        lng: 11.1601,
+        driveTime: "Merano Center",
+        desc: "Traditional South Tyrolean brewery restaurant offering hearty regional specialties and fresh Forst beer.",
+        type: "restaurant",
+        refUrl: "https://forsterbrau.it/en/"
+      },
+      {
+        id: "rest_sissi",
+        title: "🍽️ Sissi Restaurant (Chef Andrea Fenoglio)",
+        lat: 46.6695,
+        lng: 11.1585,
+        driveTime: "Merano Center",
+        desc: "Michelin-starred gourmet dining experience crafting creative South Tyrolean cuisine.",
+        type: "restaurant",
+        refUrl: "https://sissi.andreafenoglio.com/en/"
+      },
+      {
+        id: "rest_schloss_rametz",
+        title: "🍷 Restaurant Schloss Rametz",
+        lat: 46.6631,
+        lng: 11.1822,
+        driveTime: "10 min from Merano Center",
+        desc: "Set in a historic vineyard castle overlooking Merano, serving refined wine-pairing dining.",
+        type: "restaurant",
+        refUrl: "https://www.rametz.com/de/restaurant/"
+      },
+      {
+        id: "rest_miil",
+        title: "🌿 Miil Restaurant",
+        lat: 46.6215,
+        lng: 11.1502,
+        driveTime: "15 min south of Merano (Tscherms)",
+        desc: "Beautifully converted old mill featuring farm-to-table gourmet South Tyrolean dishes.",
+        type: "restaurant",
+        refUrl: "https://www.miil.it/en/home/"
+      }
+    ];
+
     const day24Raw = [
       { id: "sep24_1", offset: 0, title: "Flight Arrival @ Venice Marco Polo Airport (VCE)", lat: 45.5053, lng: 12.3519, type: "meetup", desc: "Land at VCE, collect luggage, exit baggage claim.", icon: "fa-plane-arrival", sign: "VCE Airport Terminal", num: 1, refUrl: "https://venice-airport.com/" },
       { id: "sep24_2", offset: 45, title: "Sixt Pick-up @ P1 Parking (Level 3)", lat: 45.5053, lng: 12.3519, type: "coffin", desc: "Follow 'Autonoleggi/Car Hire' signs to P1 garage Level 3 Sixt desk.", icon: "fa-car", sign: "P1 Garage - Floor 3", num: 2 },
@@ -542,25 +624,25 @@
     ];
 
     const day28Raw = [
-      { ...BASE_CASA_CANAZEI, offset: 0, id: "sep28_1", title: "Check-out @ Casa Canazei", desc: "Check out from Casa Canazei after 4-night stay." },
-      { id: "sep28_2", num: 1, offset: 90, title: "Scenic Drive across Val di Non / Merano", lat: 46.5000, lng: 11.3000, type: "meetup", desc: "Drive West past Bolzano / Merano into Val d'Ultimo valley (~2 hr drive).", icon: "fa-car", sign: "SS38 -> Val d'Ultimo" },
-      { ...BASE_CHALET_ULTIMIS, num: 2, id: "sep28_3", offset: 240, title: "Check-in @ Chalet de Ultimis", desc: "Check in at Chalet de Ultimis (St. Pankraz). Rest and settle in." }
+      { ...BASE_CASA_CANAZEI, num: 1, offset: 0, id: "sep28_1", title: "Check-out @ Casa Canazei", desc: "Check out from Casa Canazei after 4-night stay." },
+      { id: "sep28_2", num: 2, offset: 90, title: "Scenic Drive across Val di Non / Merano", lat: 46.5000, lng: 11.3000, type: "meetup", desc: "Drive West past Bolzano / Merano into Val d'Ultimo valley (~2 hr drive).", icon: "fa-car", sign: "SS38 -> Val d'Ultimo" },
+      { ...BASE_CHALET_ULTIMIS, num: 3, id: "sep28_3", offset: 240, title: "Check-in @ Chalet de Ultimis", desc: "Check in at Chalet de Ultimis (St. Pankraz). Rest and settle in." }
     ];
 
     const day29Raw = [
       { ...BASE_CHALET_ULTIMIS, num: 1, id: "sep29_1", offset: 0, title: "🚗 Drive to Ortisei (1h 30m)", desc: "Depart Chalet de Ultimis. Take SS38 past Merano toward Bolzano, connect to A22 North, exit Chiusa/Val Gardena, and follow SS242 to Ortisei." },
       { id: "sep29_2", num: 2, offset: 90, title: "🅿️ Park & Purchase Tickets (15m)", lat: 46.5762, lng: 11.6755, type: "hut", desc: "Park at underground garage at Seceda Cable Car Station (Strada Val d'Anna 2, Ortisei).", icon: "fa-square-p-parking", sign: "Seceda Cable Car Garage" },
-      { id: "sep29_3", num: 3, offset: 105, title: "🚠 Cable Car Ascent (15m)", lat: 46.5850, lng: 11.7050, type: "coffin", desc: "Ride two-stage cableway up to top station at 2,500m.", icon: "fa-cable-car", sign: "Seceda Top Station (2,500m)" },
-      { id: "sep29_4", num: 4, offset: 120, title: "📸 Summit & Ridge View (30m)", lat: 46.5982, lng: 11.7242, type: "doughnut", desc: "Walk up to Seceda Summit Cross (2,519m) for panoramic views of Odle peaks.", icon: "fa-camera", sign: "Seceda Summit Cross (2,519m)" },
-      { id: "sep29_5", num: 5, offset: 150, title: "🥾 The Mastlé Trail Hike (2h 30m)", lat: 46.5890, lng: 11.7350, type: "hut", desc: "Hike Trail No. 1 -> Trail 2B to Pieralongia twin boulders, loop past alpine lakes onto Trail 1A.", icon: "fa-person-hiking", sign: "Trail #1 -> 2B Pieralongia" },
-      { id: "sep29_6", num: 6, offset: 300, title: "🍽️ Lunch Point: Troier Hut (1h 30m)", lat: 46.5894, lng: 11.7275, type: "doughnut", desc: "Sit on open-air terrace for regional dumplings (Knödel) or a hearty Speck platter.", icon: "fa-utensils", sign: "Troier Hut" },
-      { id: "sep29_7", num: 7, offset: 390, title: "🥾 Return Hike to Lift (1h 00m)", lat: 46.5860, lng: 11.7150, type: "hut", desc: "Follow Trail No. 1 or 2 uphill climb back to Seceda cable car top station.", icon: "fa-person-hiking", sign: "Trail #1 / #2 UP" },
-      { id: "sep29_8", num: 8, offset: 450, title: "🚠 Cable Car Descent (15m)", lat: 46.5762, lng: 11.6755, type: "coffin", desc: "Take cable car back down to Ortisei valley floor.", icon: "fa-cable-car", sign: "Seceda Downhill Lift" },
-      { id: "sep29_9", num: 9, offset: 465, title: "☕ Stroll Ortisei Town (1h 00m)", lat: 46.5734, lng: 11.6713, type: "hut", desc: "Stretch legs in Ortisei pedestrian village for an espresso or gelato.", icon: "fa-mug-hot", sign: "Ortisei Pedestrian Zone" },
-      { id: "sep29_10", num: 10, offset: 525, title: "🚗 Drive to Merano (1h 15m)", lat: 46.6712, lng: 11.1594, type: "meetup", desc: "Head down Val Gardena road back to A22 highway, connect onto SS38 west into Merano.", icon: "fa-car", sign: "SS242 -> A22 -> SS38 Merano" },
-      { id: "sep29_11", num: 11, offset: 600, title: "🌆 Merano Pre-Dinner Stroll (1h 00m)", lat: 46.6712, lng: 11.1594, type: "hut", desc: "Walk along Passer Promenade or down historic arcades (Lauben).", icon: "fa-person-walking", sign: "Passer Promenade / Lauben" },
-      { id: "sep29_12", num: 12, offset: 660, title: "🍽️ Dinner in Merano (2h 00m)", lat: 46.6695, lng: 11.1590, type: "doughnut", desc: "Enjoy dinner in town (e.g., Forsterbräu Merano or Sissi).", icon: "fa-utensils", sign: "Merano Center" },
-      { ...BASE_CHALET_ULTIMIS, num: 13, id: "sep29_13", offset: 780, title: "🚗 Final Leg to Chalet (30m)", desc: "Head up SP86 mountain road into Ultenten Valley, arriving back at Chalet de Ultimis." }
+      { id: "sep29_3", num: 3, offset: 105, title: "Cable Car Ascent (15m)", lat: 46.5850, lng: 11.7050, type: "coffin", desc: "Ride two-stage cableway up to top station at 2,500m.", icon: "fa-cable-car", sign: "Seceda Top Station (2,500m)" },
+      { id: "sep29_4", num: 4, offset: 120, title: "Summit & Ridge View (30m)", lat: 46.5982, lng: 11.7242, type: "doughnut", desc: "Walk up to Seceda Summit Cross (2,519m) for panoramic views of Odle peaks.", icon: "fa-camera", sign: "Seceda Summit Cross (2,519m)" },
+      { id: "sep29_5", num: 5, offset: 150, title: "The Mastlé Trail Hike (2h 30m)", lat: 46.5890, lng: 11.7350, type: "hut", desc: "Hike Trail No. 1 -> Trail 2B to Pieralongia twin boulders, loop past alpine lakes onto Trail 1A.", icon: "fa-person-hiking", sign: "Trail #1 -> 2B Pieralongia" },
+      { id: "sep29_6", num: 6, offset: 300, title: "Lunch Point: Troier Hut (1h 30m)", lat: 46.5894, lng: 11.7275, type: "doughnut", desc: "Sit on open-air terrace for regional dumplings (Knödel) or a hearty Speck platter.", icon: "fa-utensils", sign: "Troier Hut" },
+      { id: "sep29_7", num: 7, offset: 390, title: "Return Hike to Lift (1h 00m)", lat: 46.5860, lng: 11.7150, type: "hut", desc: "Follow Trail No. 1 or 2 uphill climb back to Seceda cable car top station.", icon: "fa-person-hiking", sign: "Trail #1 / #2 UP" },
+      { id: "sep29_8", num: 8, offset: 450, title: "Cable Car Descent (15m)", lat: 46.5762, lng: 11.6755, type: "coffin", desc: "Take cable car back down to Ortisei valley floor.", icon: "fa-cable-car", sign: "Seceda Downhill Lift" },
+      { id: "sep29_9", num: 9, offset: 465, title: "🅿️ Arrive @ Ortisei Car Park", lat: 46.5762, lng: 11.6755, type: "hut", desc: "Return to parked vehicle at Ortisei cable car garage. Ready for afternoon plans!", icon: "fa-flag-checkered", sign: "Ortisei Cable Car Garage" },
+      { id: "sep29_10", num: 10, offset: 525, title: "Drive to Merano (1h 15m)", lat: 46.6712, lng: 11.1594, type: "meetup", desc: "Head down Val Gardena road back to A22 highway, connect onto SS38 west into Merano.", icon: "fa-car", sign: "SS242 -> A22 -> SS38 Merano" },
+      { id: "sep29_11", num: 11, offset: 600, title: "Merano Pre-Dinner Stroll (1h 00m)", lat: 46.6712, lng: 11.1594, type: "hut", desc: "Walk along Passer Promenade or down historic arcades (Lauben).", icon: "fa-person-walking", sign: "Passer Promenade / Lauben" },
+      { id: "sep29_12", num: 12, offset: 660, title: "Dinner in Merano (2h 00m)", lat: 46.6695, lng: 11.1590, type: "doughnut", desc: "Enjoy dinner in town from your chosen restaurant options.", icon: "fa-utensils", sign: "Merano Center" },
+      { ...BASE_CHALET_ULTIMIS, num: 13, id: "sep29_13", offset: 780, title: "Final Leg to Chalet (30m)", desc: "Head up SP86 mountain road into Ultenten Valley, arriving back at Chalet de Ultimis." }
     ];
 
     // Helpers
@@ -597,6 +679,19 @@
       const mins = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
       departureTimes[currentDate] = mins;
       renderActiveView();
+    }
+
+    function toggleMainDesc() {
+      isMainDescExpanded = !isMainDescExpanded;
+      const descEl = document.getElementById("optionDescription");
+      const iconEl = document.getElementById("iconToggleMainDesc");
+      if (isMainDescExpanded) {
+        descEl.classList.remove("hidden");
+        iconEl.className = "fa-solid fa-chevron-up";
+      } else {
+        descEl.classList.add("hidden");
+        iconEl.className = "fa-solid fa-chevron-down";
+      }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
@@ -717,14 +812,14 @@
       if (view === 'schedule') {
         schedulePanel.classList.remove("hidden");
         mapPanel.classList.add("hidden");
-        btnSchedule.className = "flex-1 py-3 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2";
-        btnMap.className = "flex-1 py-3 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2";
+        btnSchedule.className = "flex-1 py-2.5 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2";
+        btnMap.className = "flex-1 py-2.5 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2";
       } else {
         schedulePanel.classList.add("hidden");
         mapPanel.classList.remove("hidden");
         mapPanel.classList.add("w-full");
-        btnMap.className = "flex-1 py-3 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2";
-        btnSchedule.className = "flex-1 py-3 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2";
+        btnMap.className = "flex-1 py-2.5 text-center text-xs font-semibold text-sky-400 border-b-2 border-sky-400 bg-slate-800/80 flex items-center justify-center gap-2";
+        btnSchedule.className = "flex-1 py-2.5 text-center text-xs font-semibold text-slate-400 flex items-center justify-center gap-2";
         setTimeout(() => { if (map) map.invalidateSize(); }, 200);
       }
     }
@@ -735,11 +830,11 @@
         case 'doughnut': return { bg: 'bg-rose-600', border: 'border-rose-300', text: 'text-rose-400' };
         case 'coffin': return { bg: 'bg-amber-500', border: 'border-amber-300', text: 'text-amber-400' };
         case 'afternoon': return { bg: 'bg-teal-500', border: 'border-teal-300', text: 'text-teal-400' };
+        case 'restaurant': return { bg: 'bg-amber-600', border: 'border-amber-300', text: 'text-amber-400' };
         default: return { bg: 'bg-sky-600', border: 'border-sky-300', text: 'text-sky-400' };
       }
     }
 
-    // Center map and trigger popup on item click
     function highlightWaypoint(itemData) {
       if (!itemData || !itemData.lat || !itemData.lng) return;
       
@@ -762,6 +857,7 @@
 
       let currentSchedule = [];
       let afternoonIdeas = [];
+      let restaurantIdeas = [];
 
       if (currentDate === "2024-09-24") {
         currentSchedule = generateScheduleFromRaw(day24Raw, startMins);
@@ -777,16 +873,18 @@
         document.getElementById("footerBaseLabel").innerHTML = 'Base: <strong class="text-slate-200">Casa Canazei</strong>';
       } else if (currentDate === "2024-09-28") {
         currentSchedule = generateScheduleFromRaw(day28Raw, startMins);
+        afternoonIdeas = afternoonIdeasDataSep28;
         document.getElementById("footerBaseLabel").innerHTML = 'Base: <strong class="text-slate-200">Chalet de Ultimis</strong>';
       } else if (currentDate === "2024-09-29") {
         currentSchedule = generateScheduleFromRaw(day29Raw, startMins);
-        afternoonIdeas = afternoonIdeasDataSep27;
+        afternoonIdeas = afternoonIdeasDataSep29;
+        restaurantIdeas = restaurantIdeasDataSep29;
         document.getElementById("footerBaseLabel").innerHTML = 'Base: <strong class="text-slate-200">Chalet de Ultimis</strong>';
       }
 
       renderOptionButtons();
-      renderTimeline(currentSchedule, afternoonIdeas);
-      updateMapMarkers(currentSchedule, afternoonIdeas);
+      renderTimeline(currentSchedule, afternoonIdeas, restaurantIdeas);
+      updateMapMarkers(currentSchedule, afternoonIdeas, restaurantIdeas);
     }
 
     function buildLinksHTML(refUrl) {
@@ -794,13 +892,13 @@
       return `
         <div class="flex items-center gap-2 mt-2 pt-1.5 border-t border-slate-700/60 text-xs">
           <a href="${refUrl}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();" class="text-sky-400 hover:text-sky-300 font-medium inline-flex items-center gap-1 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-800/80">
-            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Ref
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Link / Ref
           </a>
         </div>
       `;
     }
 
-    function renderTimeline(scheduleList, afternoonIdeas) {
+    function renderTimeline(scheduleList, afternoonIdeas, restaurantIdeas) {
       const container = document.getElementById("timelineContainer");
       
       if (!scheduleList || scheduleList.length === 0) {
@@ -831,9 +929,9 @@
                   <h4 class="text-xs font-bold text-slate-100 group-hover:text-sky-300 transition-colors leading-snug">
                     ${item.title}
                   </h4>
-                  ${item.sign ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 whitespace-nowrap shrink-0">${item.sign}</span>` : ''}
+                  ${item.sign ? `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700 shrink-0 whitespace-nowrap">${item.sign}</span>` : ''}
                 </div>
-                <p class="text-xs text-slate-400 mt-1 leading-relaxed">${item.desc}</p>
+                <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">${item.desc}</p>
                 ${buildLinksHTML(item.refUrl)}
               </div>
             </div>
@@ -854,8 +952,30 @@
                     <h5 class="text-xs font-bold text-teal-200">${idea.title}</h5>
                     <span class="text-[10px] text-teal-400 font-medium bg-teal-900/60 px-2 py-0.5 rounded-full border border-teal-700/50">${idea.driveTime}</span>
                   </div>
-                  <p class="text-xs text-slate-300 leading-relaxed">${idea.desc}</p>
+                  <p class="text-xs text-slate-300 leading-relaxed mt-1">${idea.desc}</p>
                   ${buildLinksHTML(idea.refUrl)}
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      if (restaurantIdeas && restaurantIdeas.length > 0) {
+        html += `
+          <div class="mt-4 pt-3 border-t border-slate-700/50">
+            <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+              <i class="fa-solid fa-utensils"></i> Restaurants
+            </h4>
+            <div class="space-y-2">
+              ${restaurantIdeas.map(rest => `
+                <div onclick='highlightWaypoint(${JSON.stringify(rest)})' class="bg-amber-950/20 border border-amber-800/40 rounded-xl p-3 hover:border-amber-500 transition-all cursor-pointer">
+                  <div class="flex items-center justify-between mb-1">
+                    <h5 class="text-xs font-bold text-amber-200">${rest.title}</h5>
+                    <span class="text-[10px] text-amber-400 font-medium bg-amber-900/60 px-2 py-0.5 rounded-full border border-amber-700/50">${rest.driveTime}</span>
+                  </div>
+                  <p class="text-xs text-slate-300 leading-relaxed mt-1">${rest.desc}</p>
+                  ${buildLinksHTML(rest.refUrl)}
                 </div>
               `).join("")}
             </div>
@@ -866,7 +986,7 @@
       container.innerHTML = html;
     }
 
-    function updateMapMarkers(scheduleList, afternoonIdeas) {
+    function updateMapMarkers(scheduleList, afternoonIdeas, restaurantIdeas) {
       if (!map || !markersGroup) return;
       markersGroup.clearLayers();
       markerMap = {};
@@ -945,6 +1065,41 @@
               .addTo(markersGroup);
 
             if (idea.id) markerMap[idea.id] = m;
+          }
+        });
+      }
+
+      if (restaurantIdeas) {
+        restaurantIdeas.forEach(rest => {
+          if (rest.lat && rest.lng) {
+            const latLng = [rest.lat, rest.lng];
+
+            const customIcon = L.divIcon({
+              className: 'custom-leaflet-marker',
+              html: `
+                <div class="w-7 h-7 rounded-full bg-amber-600 border-2 border-amber-300 text-white flex items-center justify-center font-bold text-xs shadow-lg">
+                  <i class="fa-solid fa-utensils text-[11px]"></i>
+                </div>
+              `,
+              iconSize: [28, 28],
+              iconAnchor: [14, 14]
+            });
+
+            const popupContent = `
+              <div class="p-1 min-w-[200px]">
+                <div class="text-[10px] font-bold text-amber-400 mb-1 uppercase tracking-wider">Restaurant Recommendation</div>
+                <div class="text-sm font-bold text-white mb-1">${rest.title}</div>
+                <div class="text-xs text-slate-300 leading-relaxed mb-1">${rest.desc}</div>
+                <div class="text-[10px] text-amber-300 font-medium">${rest.driveTime}</div>
+                ${buildLinksHTML(rest.refUrl)}
+              </div>
+            `;
+
+            const m = L.marker(latLng, { icon: customIcon })
+              .bindPopup(popupContent)
+              .addTo(markersGroup);
+
+            if (rest.id) markerMap[rest.id] = m;
           }
         });
       }
